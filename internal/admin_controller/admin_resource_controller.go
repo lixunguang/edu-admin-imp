@@ -1,0 +1,215 @@
+package admin_controller
+
+import (
+	"edu-imp/internal/admin_dto"
+	"edu-imp/internal/common"
+	"edu-imp/internal/dto"
+	"edu-imp/internal/service"
+	"edu-imp/pkg/cerror"
+	"edu-imp/pkg/logger"
+	"edu-imp/pkg/util"
+	"fmt"
+	"github.com/gin-gonic/gin"
+)
+
+func AddRichtext(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAdd Controller")
+	//获取参数
+	var param admin_dto.ResourceParam
+	if err := ctx.ShouldBindJSON(&param); err != nil {
+		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
+		util.FailJson(ctx, cerror.InvalidParams)
+		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
+
+	var param2 dto.Resource
+	param2.Title = param.Title
+	param2.Desc = param.Desc
+	param2.Content = param.Content
+	param2.Type = common.RichType
+	// 调用service
+	id, err := service.AddResource(ctx, param2)
+	// 结果返回
+	if err != nil {
+		util.FailJson(ctx, err)
+	} else {
+		var res = dto.IDParam{ID: id}
+		util.SuccessJson(ctx, res)
+	}
+
+}
+
+func DelRichtext(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAdd Controller")
+
+	//获取参数
+	var param admin_dto.ResouceIDParam
+	if err := ctx.ShouldBindJSON(&param); err != nil {
+		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
+		util.FailJson(ctx, cerror.InvalidParams)
+		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
+
+	// 调用service
+	var param2 admin_dto.ResouceDelParam
+	param2.ID = param.ID
+	param2.Type = common.RichType
+	id, err := service.DelResource(ctx, param2)
+
+	// 结果返回
+	if err != nil {
+		util.FailJson(ctx, err)
+	} else {
+		var res = dto.IDParam{ID: id}
+		util.SuccessJson(ctx, res)
+	}
+
+}
+
+func UpdateRichtext(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAdd Controller")
+	//获取参数
+	var param dto.UpdateResourceParam
+	if err := ctx.ShouldBindJSON(&param); err != nil {
+		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
+		util.FailJson(ctx, cerror.InvalidParams)
+		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
+
+	param.Type = common.RichType
+	// 调用service
+	id, err := service.UpdateResource(ctx, param)
+	// 结果返回
+	if err != nil {
+		util.FailJson(ctx, err)
+	} else {
+		var res = dto.IDParam{ID: id}
+		util.SuccessJson(ctx, res)
+	}
+
+}
+
+func DelFile(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAdd Controller")
+	//获取参数
+	var param admin_dto.ResouceIDParam
+	if err := ctx.ShouldBindJSON(&param); err != nil {
+		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
+		util.FailJson(ctx, cerror.InvalidParams)
+		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
+
+	// 调用service
+	var param2 admin_dto.ResouceDelParam
+	param2.ID = param.ID
+	param2.Type = common.FileType
+	id, err := service.DelResource(ctx, param2)
+
+	// 结果返回
+	if err != nil {
+		util.FailJson(ctx, err)
+	} else {
+		var res = dto.IDParam{ID: id}
+		util.SuccessJson(ctx, res)
+	}
+
+}
+
+/*
+//not used
+func ResourceAll(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAll Controller")
+	//获取参数
+	var param admin_dto.CourseLessonIDParam
+	if err := ctx.ShouldBindJSON(&param); err != nil {
+		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
+		util.FailJson(ctx, cerror.InvalidParams)
+		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
+
+	//参数校验
+	res, err := admin_service.GetLessonResourceAll(ctx, param.CourseID, param.LessonID)
+
+	//结果返回
+	if err == nil {
+		util.SuccessJson(ctx, res)
+	} else {
+		util.FailJson(ctx, err)
+	}
+
+}
+
+//not used
+func ResourceAdd(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAdd Controller")
+	//获取参数
+	var param admin_dto.LessonResourceParam
+	if err := ctx.ShouldBindJSON(&param); err != nil {
+		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
+		util.FailJson(ctx, cerror.InvalidParams)
+		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
+
+	//参数校验
+	res, err := admin_service.LessonResourceAdd(ctx, param)
+
+	//结果返回
+	if err == nil {
+		util.SuccessJson(ctx, res)
+	} else {
+		util.FailJson(ctx, err)
+	}
+
+}
+
+//not used
+func ResourceDel(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "admin ResourceDel Controller")
+	//获取参数
+	var param admin_dto.LessonResourceDelParam
+	if err := ctx.ShouldBindJSON(&param); err != nil {
+		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
+		util.FailJson(ctx, cerror.InvalidParams)
+		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
+
+	//参数校验
+	res, err := admin_service.LessonResourceDel(ctx, param)
+
+	//结果返回
+	if err == nil {
+		util.SuccessJson(ctx, res)
+	} else {
+		util.FailJson(ctx, err)
+	}
+
+}
+*/

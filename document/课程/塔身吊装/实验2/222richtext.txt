@@ -1,0 +1,199 @@
+<ul>
+<li>熟练掌握Simdroid梁、壳单元相关的各种工具。</li>
+<li>熟悉掌握Simdroid完整仿真算例计算流程。</li>
+</ul>
+
+
+<ul>
+<li>学习Simdroid工具栏各种工具，包含截面定义、赋予截面属性；</li>
+<li>学习Simdroid完整计算流程，包含模型建立、材料属性、加载和约束设置、后处理等。</li>
+</ul>
+
+
+<ul>
+<li>
+<h2><a name="_Toc122939793"></a>3.1 实验步骤</h2>
+<ul>
+<li>新建分析</li>
+<li>几何建模</li>
+<li>创建截面</li>
+<li>创建材料</li>
+<li>创建网格</li>
+<li>设置截面属性</li>
+<li>施加边界和连接</li>
+<li>设置分析和加载</li>
+<li>计算和后处理</li>
+</ul>
+<h2><a name="_Toc122939794"></a>3.2 要点总结</h2>
+<ul>
+<li>创建截面、赋予截面属性、指定截面方向是一系列的连续操作，缺一不可。</li>
+<li>掌握各类梁单元截面形式的含义。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>无</p>
+
+
+
+<h2><a name="_Toc122939797"></a>5.1 案例介绍</h2>
+<p>本案例建立了梁支架模型，详细介绍了结构通用静力仿真分析过程。</p>
+<h2><a name="_Toc122939798"></a>5.2 模型说明</h2>
+<p>图 1支架模型</p>
+<p>几何：梁支架高度为1m，截面为圆形，半径0.01m。如图所示，单块板长为1m，板厚为0.005m。</p>
+<p>材料：所有几何材料均为铝材，密度：2700kg/m^3，弹性模量：7E10Pa，泊松比：0.3。</p>
+<p>边界与载荷：固定约束所有梁支架的下端点。中间板施加-Y向的压力250Pa。</p>
+<p>&nbsp;</p>
+<h2><a name="_Toc122939799"></a>5.3 仿真及开发过程</h2>
+<h3><a name="_Toc122939800"></a>5.3.1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 新建分析</h3>
+<ul>
+<li>启动Simdroid。</li>
+<li>在【新建】对话框，分析类型选择【结构分析】，维度选择【三维】，名称输入&ldquo;梁支架通用静力仿真分析&rdquo;，选择工作路径，单击【确定】。</li>
+</ul>
+<p>图 2新建项目</p>
+<h3><a name="_Toc122939801"></a>5.3.2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 几何建模</h3>
+<ul>
+<li>选择【三维建模】&gt;【创建2D草图】，选择XY平面，进入草图环境。</li>
+<li>建立梁支架草图，选择&ldquo;线&rdquo;，在草图视图区创建如下图所示的模型，单击【完成草图】。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 3单根梁草图</p>
+<ul>
+<li>选中模型树上刚创建的&ldquo;草图&rdquo;，单击【三维建模】&gt;【生成线】，将草图变成线体。</li>
+<li>选中模型树上刚创建的&ldquo;线&rdquo;，单击【三维建模】&gt;【阵列】，输入下图界面中参数，单击&ldquo;&radic;&rdquo;，模型树上生成&ldquo;阵列&rdquo;节点，将其重命名为&ldquo;梁&rdquo;。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 4阵列生成梁支架</p>
+<ul>
+<li>再次选择【三维建模】&gt;【创建2D草图】，选择YZ平面，进入草图环境。</li>
+<li>建立支架上薄板的草图，选择&ldquo;线&rdquo;，在草图视图区创建如下图所示的模型，单击【完成草图】。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 5薄板草图</p>
+<ul>
+<li>选中模型树上刚创建的&ldquo;草图1&rdquo;，单击【三维建模】&gt;【拉伸】，在任务面板修改&ldquo;正向长度&rdquo;为1m。单击&ldquo;&radic;&rdquo;，模型树上生成&ldquo;拉伸&rdquo;节点，将其重命名为&ldquo;薄板&rdquo;。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 6拉伸生成薄板</p>
+<p>&nbsp;</p>
+<h3><a name="_Toc122939802"></a>5.3.3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 创建截面</h3>
+<ul>
+<li>单击【三维建模】&gt;【截面】，&ldquo;类型&rdquo;选择为&ldquo;壳&rdquo;，&ldquo;名称&rdquo;改为&ldquo;板截面&rdquo;，&ldquo;厚度(t)&rdquo;输入&ldquo;005m&rdquo;。单击&ldquo;&radic;&rdquo;完成壳截面的设置。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 7设置壳截面</p>
+<ul>
+<li>单击【三维建模】&gt;【截面】，&ldquo;类型&rdquo;选择为&ldquo;圆形&rdquo;，&ldquo;名称&rdquo;改为&ldquo;梁截面&rdquo;，&ldquo;半径(r)&rdquo;输入&ldquo;01m&rdquo;。单击&ldquo;&radic;&rdquo;完成梁截面的设置。</li>
+</ul>
+<p>图 8设置梁截面</p>
+<h3><a name="_Toc122939803"></a>5.3.4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 创建材料</h3>
+<ul>
+<li>选择【材料属性】&gt;【创建材料】，修改&ldquo;标签&rdquo;为&ldquo;板材料&rdquo;。在【目标】中修改&ldquo;拾取类型&rdquo;为&ldquo;面(壳)&rdquo;，视图区点选所有薄板，在【属性】中双击选择【基本属性】&gt;【基本材料】&gt;【密度】和【固体属性】&gt;【线弹性】&gt;【各向同性】，设置密度为2700kg/m^3、弹性模量为7e10Pa、泊松比为3，单击【&radic;】，完成薄板材料的施加。</li>
+</ul>
+<p>图 9创建薄板材料</p>
+<ul>
+<li>同样的步骤设置梁支架的材料参数。</li>
+</ul>
+<h3><a name="_Toc122939804"></a>5.3.5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 创建网格</h3>
+<ul>
+<li>选中【几何模型】&gt;【薄板】节点，选择【网格划分】&gt;【单体剖分】，设置&ldquo;最大尺寸&rdquo;为1m，&ldquo;单元类型&rdquo;选择为&ldquo;TMQ(TMT)&rdquo;，单击&ldquo;&radic;&rdquo;，完成薄板的网格剖分。</li>
+</ul>
+<p>图 10薄板网格剖分</p>
+<ul>
+<li>选中【几何模型】&gt;【梁】节点，选择【网格划分】&gt;【单体剖分】，设置&ldquo;最大尺寸&rdquo;为1m，&ldquo;单元类型&rdquo;选择为&ldquo;Beam2&rdquo;，单击&ldquo;&radic;&rdquo;，完成梁支架的网格剖分。</li>
+</ul>
+<p>图 11梁支架网格剖分</p>
+<p>&nbsp;</p>
+<h3><a name="_Toc122939805"></a>5.3.6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 设置截面属性</h3>
+<ul>
+<li>选择【分析】&gt;【指定截面】，将&ldquo;选择截面&rdquo;选择为&ldquo;板截面&rdquo;，&ldquo;拾取类型&rdquo;选择为&ldquo;壳&rdquo;，视图区选择三个薄板，单击&ldquo;&radic;&rdquo;完成薄板的截面设置。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 12指定薄板截面</p>
+<p>&nbsp;</p>
+<ul>
+<li>选择【分析】&gt;【指定截面】，将&ldquo;选择截面&rdquo;选择为&ldquo;梁截面&rdquo;，&ldquo;拾取类型&rdquo;选择为&ldquo;梁/杆&rdquo;，视图区选择八个梁支架，单击&ldquo;&radic;&rdquo;完成梁支架的截面设置。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 13指定梁支架截面</p>
+<p>&nbsp;</p>
+<ul>
+<li>选择【分析】&gt;【指定截面方向】，视图区选择八个梁支架，方向为默认，单击&ldquo;&radic;&rdquo;完成梁支架的截面方向设置。</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>图 14指定梁支架截面方向</p>
+<p>&nbsp;</p>
+<h3><a name="_Toc122939806"></a>5.3.7 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 施加边界和连接</h3>
+<h4>5.3.7.1 &nbsp;设置耦合连接</h4>
+<ul>
+<li>选择【分析】&gt;【耦合连接】打开任务面板（单击【耦合连接】前先选择模型树上【几何模型】&gt;【薄板】节点，右键单击&ldquo;切换可见性 空格&rdquo;来隐藏【薄板】的几何模型，或通过空格键来隐藏/显示）。</li>
+<li>【目标-主边界-点】窗口默认处于激活状态，视图区选择如图所示点为耦合连接的主边界点。</li>
+</ul>
+<table>
+<tbody>
+<tr>
+<td width="156">&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>图 15选择主边界点</p>
+<ul>
+<li>鼠标单击【目标-从边界-体/面/边/点】窗口来激活从边界拾取窗口，&ldquo;拾取类型&rdquo;选择&ldquo;点&rdquo;。</li>
+<li>单击视图区工具栏的【切换几何模型可见性】图标，切换视图区的几何模型显示，当前视图区显示为薄板模型。</li>
+<li>选择薄板上与主边界点对应的薄板上的点。单击&ldquo;&radic;&rdquo;，完成第一对耦合连接的设置。</li>
+</ul>
+<table>
+<tbody>
+<tr>
+<td width="161">&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>图 16选择从边界点</p>
+<ul>
+<li>同样的步骤设置剩余7对耦合连接。</li>
+</ul>
+<h4>5.3.7.2 &nbsp;设置约束边界</h4>
+<ul>
+<li>单击视图区工具栏的【显示全部几何模型】图标，显示所有的几何模型。</li>
+<li>选择【分析】&gt;【常规约束】，在任务面板将&ldquo;拾取类型&rdquo;选择为&ldquo;点&rdquo;，依次选择视图区梁支架的8个下端点。勾选约束6个自由度，单击&ldquo;&radic;&rdquo;完成约束边界的设置。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 17施加常规约束</p>
+<h3><a name="_Toc122939807"></a>5.3.8 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 设置分析和加载</h3>
+<ul>
+<li>选择【分析】&gt;【创建分析】，选择【通用静力分析】，单击【添加】单击&ldquo;&radic;&rdquo;。</li>
+</ul>
+<p>图 18创建分析</p>
+<ul>
+<li>选择【分析】&gt;【压力】，拾取中间的薄板，输入【荷载设置】&gt;【数值】为250Pa，单击&ldquo;&radic;&rdquo;完成载荷的设置。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 19施加载荷</p>
+<h3><a name="_Toc122939808"></a>5.3.9 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 计算和后处理</h3>
+<ul>
+<li>选择【分析】&gt;【计算】，开始计算，在报告浏览器中可查看求解过程。</li>
+<li>选中模型树上【结果展示】，在工具栏中选择【云图】，物理场选择【Disp】，单击&ldquo;&radic;&rdquo;。可以查看位移变形云图。</li>
+</ul>
+<p>&nbsp;</p>
+<p>图 20查看位移云图</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<ul>
+<li>同样的步骤可以查看应力云图。</li>
+</ul>
+<p>图 21 查看位移云图</p>
