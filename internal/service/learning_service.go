@@ -60,10 +60,13 @@ func GetLearningByID(ctx *gin.Context, id int) dto.LearningInfoRes {
 
 	var res dto.LearningInfoRes
 
-	var learningRes dto.LearningRes
-	learningRes = dao.GetLearning(ctx, id)
+	//var learningRes dao.Learning
+	learningRes, _ := dao.GetLearning(ctx, id)
 
-	res.LearningRes = learningRes
+	res.LearningRes.Author = learningRes.Author
+	res.LearningRes.Title = learningRes.Title
+	res.LearningRes.Desc = learningRes.Desc
+
 	resourceList, _ := dao.GetLearningResourceList(ctx, id)
 	for _, v := range resourceList {
 		var item dto.LearningItem

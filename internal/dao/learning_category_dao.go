@@ -68,3 +68,22 @@ func GetLearningCategory(ctx *gin.Context) ([]dto.LearningCategory, cerror.Cerro
 
 	return res, nil
 }
+
+func GetLearningCategoryByID(ctx *gin.Context, id int) (dto.LearningCategory, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	var res dto.LearningCategory
+
+	var learningCategory LearningCategory
+	result := mysqlDB.Where("id = ?", id).First(&learningCategory)
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return res, cerror.NewCerror(common.Failed, result.Error.Error())
+	}
+
+	res.ID = learningCategory.ID
+	res.Title = learningCategory.Title
+	res.Desc = learningCategory.Desc
+
+	return res, nil
+}

@@ -15,20 +15,11 @@ import (
 func LearningAll(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "LearningAdd Controller")
 	//获取参数
-	var param dto.Learning
-	if err := ctx.ShouldBindJSON(&param); err != nil {
-		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
-		util.FailJson(ctx, cerror.InvalidParams)
-		return
-	}
-	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
-		logger.Infoc(ctx, "---->input param: %+v", param)
-	}
+
 	//参数校验
 
 	//调用service
-	res, err := service.AddLearning(ctx, param)
+	res, err := admin_service.GetLearningAll(ctx)
 
 	//结果返回
 	if err != nil {
@@ -55,7 +46,7 @@ func Learning(ctx *gin.Context) {
 	}
 	//参数校验
 	//调用service
-	res := service.GetLearningByID(ctx, param.ID)
+	res := admin_service.GetLearningByID(ctx, param.ID)
 
 	//结果返回
 

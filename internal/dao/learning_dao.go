@@ -52,22 +52,18 @@ func GetNlearning(ctx *gin.Context, number int) []Learning {
 }
 
 //获取学习资料详情
-func GetLearning(ctx *gin.Context, id int) dto.LearningRes {
+func GetLearning(ctx *gin.Context, id int) (Learning, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
 
 	var learning Learning
-	var res dto.LearningRes
-	result := mysqlDB.Where("id=?", id).First(&learning)
+
+	result := mysqlDB.Where("id = ?", id).First(&learning)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.NewsLatest] fail,err=%+v", result.Error)
-		return res
+		return learning, cerror.NewCerror(common.FailedID, result.Error.Error())
 	}
 
-	res.Desc = learning.Desc
-	res.Title = learning.Title
-	res.Author = learning.Author
-
-	return res
+	return learning, nil
 }
 
 //获取n个学习资料，根据一定的推荐标准，比如：时间
