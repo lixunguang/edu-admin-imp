@@ -33,6 +33,19 @@ func AddLearningCategory(ctx *gin.Context, param dto.LearningCategory) (int, cer
 	return learningCategory.ID, nil
 }
 
+func DelLearningCategory(ctx *gin.Context, id int) (int, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	result := mysqlDB.Delete(&LearningCategory{}, id)
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return common.FailedID, cerror.NewCerror(common.Failed, result.Error.Error())
+	}
+
+	return id, nil
+}
+
 func GetLearningCategory(ctx *gin.Context) ([]dto.LearningCategory, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
 

@@ -116,7 +116,7 @@ func GetLearningCategoryResourcePagedData(ctx *gin.Context, pageParam dto.Learni
 	return res, nil
 }
 
-//获取新闻条数
+//获取分类下的学习资源条数
 func GetLearningCategoryResourceCount(ctx *gin.Context, id int) (int64, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
 

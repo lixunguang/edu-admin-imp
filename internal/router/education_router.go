@@ -32,12 +32,9 @@ func educationRouter(e *gin.Engine) {
 	g.POST("/news/all", controller.NewsALL)
 
 	//学习栏目 learning
-	g.POST("/learning/add", controller.LearningAdd)
-	g.POST("/learning/category/add", controller.LearningCategoryAdd)
-	g.POST("/learning/item/add", controller.LearningItemAdd)
-
 	g.POST("/learning/resource/recommend", controller.LearningResourceRecommend)
 	g.POST("/learning/resource", controller.LearningResource)
+
 	g.POST("/learning/category", controller.LearningCategory)
 	g.POST("/learning/category/resource", controller.LearningCategoryResource)
 	g.POST("/learning/category/resource/recommend", controller.LearningCategoryResourceRecommend)

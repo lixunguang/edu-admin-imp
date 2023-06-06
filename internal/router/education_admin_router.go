@@ -41,6 +41,19 @@ func educationAdminRouter(e *gin.Engine) {
 	g.POST("/news/update", admin_controller.NewsUpdate)
 
 	//学习资源
+	g.POST("/learning/category/all", admin_controller.LearningCategoryAll)
+	g.POST("/learning/category/add", admin_controller.LearningCategoryAdd)
+	g.POST("/learning/category/del", admin_controller.LearningCategoryDel)
+
+	g.POST("/learning", admin_controller.Learning)
+	g.POST("/learning/all", admin_controller.LearningAll)
+	g.POST("/learning/add", admin_controller.LearningAdd)
+	g.POST("/learning/del", admin_controller.LearningDel)
+	g.POST("/learning/update", admin_controller.LearningUpdate)
+
+	g.POST("/learning/resource/all", admin_controller.LearningResourceAll)
+	g.POST("/learning/resource/add", admin_controller.LearningResourceAdd)
+	g.POST("/learning/resource/del", admin_controller.LearningResourceDel)
 
 	// 课程编辑：课程概要信息
 	g.POST("/course/all", admin_controller.CourseAll)       //查：所有课程
