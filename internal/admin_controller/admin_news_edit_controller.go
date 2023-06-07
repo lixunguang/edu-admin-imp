@@ -12,6 +12,34 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func News(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "News Controller")
+	//获取参数
+	var param dto.IDParam
+	if err := ctx.ShouldBindJSON(&param); err != nil {
+		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
+		util.FailJson(ctx, cerror.InvalidParams)
+		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
+	//参数校验
+
+	//调用service
+	news, err := admin_service.OneNews(ctx, param)
+
+	//结果返回
+	if err != nil {
+		util.FailJson(ctx, err)
+
+	} else {
+		util.SuccessJson(ctx, news)
+	}
+
+}
+
 // NewsAdd is 增加新闻.
 func NewsAdd(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "NewsAdd Controller")
@@ -94,33 +122,15 @@ func NewsUpdate(ctx *gin.Context) {
 	}
 }
 
-//前端需要个全部news的接口，此处有优化空间，考虑平台和后台一套
-//这里只做适配
-func NewsAll(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "NewsALL Controller")
+func NewsTitleAll(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "NewsTitleALL Controller")
 	//获取参数
-	var param dto.NewsAllParam
-	param.PageSize = 10000
-	param.CurrentPage = 0
 
-	/*
-		if err := ctx.ShouldBindJSON(&param); err != nil {
-			logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
-			util.FailJson(ctx, cerror.InvalidParams)
-			return
-		}
-	*/
-
-	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
-		logger.Infoc(ctx, "---->input param: %+v", param)
-	}
 	//参数校验
 
 	//调用service
-	var newsAllRes dto.NewsAllRes
-	var err cerror.Cerror
-	newsAllRes, err = service.NewsALL(ctx, param)
+
+	newsAllRes, err := admin_service.NewsTitleALL(ctx)
 
 	//结果返回
 	if err == nil {
@@ -139,14 +149,13 @@ func NewsBannerAll(ctx *gin.Context) {
 
 	// 调用service
 	picNews, err := service.BannerNewsALL(ctx)
-	fmt.Println(err)
 
 	// 结果返回
-	var res dto.BannerNewsLatestRes
-	res.PicNews = picNews
+	//var res dto.BannerNewsLatestRes
+	//res.PicNews = picNews
 
 	if err == nil {
-		util.SuccessJson(ctx, res)
+		util.SuccessJson(ctx, picNews)
 	} else {
 		util.FailJson(ctx, err)
 	}

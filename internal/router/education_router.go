@@ -26,10 +26,10 @@ func educationRouter(e *gin.Engine) {
 
 	//新闻栏目 news
 
-	g.POST("/news/latest", controller.NewsLatest)
+	//g.POST("/news/latest", controller.NewsLatest)
 	g.POST("/news/banner/latest", controller.BannerNewsLatest)
 	g.POST("/news", controller.News)
-	g.POST("/news/all", controller.NewsALL)
+	//g.POST("/news/all", controller.NewsALL)
 
 	//学习栏目 learning
 	g.POST("/learning/resource/recommend", controller.LearningResourceRecommend)

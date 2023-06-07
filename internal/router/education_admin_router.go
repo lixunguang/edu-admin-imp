@@ -33,8 +33,8 @@ func educationAdminRouter(e *gin.Engine) {
 	g.POST("/administrator", admin_controller.GetAdmin)
 
 	//新闻编辑
-	g.POST("/news", controller.News)
-	g.POST("/news/all", admin_controller.NewsAll)
+	g.POST("/news", admin_controller.News)
+	g.POST("/news/all", admin_controller.NewsTitleAll)
 	g.POST("/news/banner/all", admin_controller.NewsBannerAll)
 	g.POST("/news/add", admin_controller.NewsAdd)
 	g.POST("/news/del", admin_controller.NewsDel)

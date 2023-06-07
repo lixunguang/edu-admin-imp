@@ -91,7 +91,8 @@ func UpdateNews(ctx *gin.Context, news News) (News, cerror.Cerror) {
 	return news, nil
 }
 
-func GetTitleNews(ctx *gin.Context, number int) []dto.NewsResObj {
+/*
+func GetTitleNews(ctx *gin.Context, number int) []dto.NewsItemRes {
 	// 标题新闻
 	mysqlDB := mysql.GetDB()
 
@@ -102,20 +103,19 @@ func GetTitleNews(ctx *gin.Context, number int) []dto.NewsResObj {
 		return nil
 	}
 
-	var dtoNews []dto.NewsResObj
+	var newsItems []dto.NewsItemRes
 	for _, val := range news {
-		var item dto.NewsResObj
+		var item dto.NewsItemRes
 		item.NewsID = val.ID
 		item.Title = val.Title
-		item.Content = val.Content
 		item.Author = val.Publisher
 		item.DateStr = val.UpdatedAt.Format(util.FormatDate)
-		dtoNews = append(dtoNews, item)
+		newsItems = append(newsItems, item)
 	}
 
-	return dtoNews
+	return newsItems
 }
-
+*/
 func GetPictureNews(ctx *gin.Context, number int) []dto.PicNews {
 	// 图片新闻
 	mysqlDB := mysql.GetDB()
@@ -131,12 +131,40 @@ func GetPictureNews(ctx *gin.Context, number int) []dto.PicNews {
 	for _, val := range picNews {
 		var item dto.PicNews
 		item.NewsID = val.ID
+		item.Title = val.Title
+		item.Date = val.UpdatedAt.Format(util.FormatDate)
+		item.Author = val.Publisher
+
 		item.PictureUrl = GetResourceContentFromID(ctx, val.PictureID)
 
 		dtoPicNews = append(dtoPicNews, item)
 	}
 
 	return dtoPicNews
+}
+
+func GetTitleNews(ctx *gin.Context, number int) []dto.TitleNews {
+	// 图片新闻
+	mysqlDB := mysql.GetDB()
+
+	var titleNews []News
+	result := mysqlDB.Order("updated_at desc").Limit(number).Where("picture_id = ?", 0).Find(&titleNews)
+	if result.Error != nil {
+		logger.Warnc(ctx, "[newsdao.GetPictureNews] fail,err=%+v", result.Error)
+		return nil
+	}
+
+	var titleNewsRes []dto.TitleNews
+	for _, val := range titleNews {
+		var item dto.TitleNews
+		item.NewsID = val.ID
+		item.Title = val.Title
+		item.Date = val.UpdatedAt.Format(util.FormatDate)
+		item.Author = val.Publisher
+		titleNewsRes = append(titleNewsRes, item)
+	}
+
+	return titleNewsRes
 }
 
 // 获取一条新闻详情
@@ -160,6 +188,19 @@ func GetNewsById(ctx *gin.Context, id dto.IDParam) (dto.NewsResObj, cerror.Cerro
 	news.PictureUrl = GetResourceContentFromID(ctx, res.PictureID)
 
 	return news, nil
+}
+
+func GetNewsDetailById(ctx *gin.Context, id dto.IDParam) (News, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	res := News{}
+	result := mysqlDB.Where("id = ? ", id.ID).First(&res)
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v, id=%d", result.Error, id)
+		return res, cerror.NewCerror(common.Failed, result.Error.Error())
+	}
+
+	return res, nil
 }
 
 // 获取新闻条数

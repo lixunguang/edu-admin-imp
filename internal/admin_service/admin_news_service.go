@@ -1,6 +1,7 @@
 package admin_service
 
 import (
+	"edu-imp/internal/admin_dto"
 	"edu-imp/internal/common"
 	"edu-imp/internal/dao"
 	"edu-imp/internal/dto"
@@ -11,6 +12,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"time"
 )
+
+func OneNews(ctx *gin.Context, id dto.IDParam) (admin_dto.NewsDetailRes, cerror.Cerror) {
+
+	var res admin_dto.NewsDetailRes
+
+	newRes, err := dao.GetNewsDetailById(ctx, id)
+
+	res.Author = newRes.Publisher
+	res.Date = newRes.UpdatedAt.Format(util.FormatDate)
+	res.Title = newRes.Title
+	res.Content = newRes.Content
+	res.PictureID = newRes.PictureID
+	res.PictureUrl = dao.GetResourceContentFromID(ctx, newRes.PictureID)
+	res.PictureTitle, _ = dao.GetResourceTitleByID(ctx, newRes.PictureID)
+	return res, err
+}
 
 func AddNews(ctx *gin.Context, newsParam dto.NewsAddParam) (dto.UpdateNewsRes, cerror.Cerror) {
 
@@ -50,6 +67,16 @@ func UpdateNews(ctx *gin.Context, newsParam dto.NewsUpdateParam) (dto.UpdateNews
 	newsRes.Title = res.Title
 
 	return newsRes, err
+}
+
+//获取新闻列表
+func NewsTitleALL(ctx *gin.Context) ([]dto.TitleNews, cerror.Cerror) {
+
+	newsNumber := -1
+	newsRes := dao.GetTitleNews(ctx, newsNumber)
+
+	return newsRes, nil
+
 }
 
 type FileItem struct {

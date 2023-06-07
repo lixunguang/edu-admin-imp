@@ -32,6 +32,16 @@ type NewsItemRes struct {
 type PicNews struct {
 	NewsID     int    `json:"news_id"`
 	PictureUrl string `json:"pic_url"`
+	Title      string `json:"title"`
+	Date       string `json:"date"`
+	Author     string `json:"author"`
+}
+
+type TitleNews struct {
+	NewsID int    `json:"news_id"`
+	Title  string `json:"title"`
+	Date   string `json:"date"`
+	Author string `json:"author"`
 }
 
 type NewsRes struct {
