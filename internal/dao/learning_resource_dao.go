@@ -1,8 +1,8 @@
 package dao
 
 import (
+	"edu-imp/internal/admin_dto"
 	"edu-imp/internal/common"
-	"edu-imp/internal/dto"
 	"edu-imp/internal/model/mysql"
 	"edu-imp/pkg/cerror"
 	"edu-imp/pkg/logger"
@@ -22,9 +22,9 @@ func (LearningResource) TableName() string {
 	return "learning_resource"
 }
 
-func AddLearningItem(ctx *gin.Context, param dto.LearningItemParam) (int, cerror.Cerror) {
-
+func AddLearningResource(ctx *gin.Context, param admin_dto.AddLearningResourceParam) (int, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
+
 	var learningItem = LearningResource{Title: param.Title, Desc: param.Desc, LearningID: param.LearningID, ResourceID: param.ResourceID, Index: param.Index}
 	result := mysqlDB.Create(&learningItem)
 	if result.Error != nil {
@@ -33,6 +33,19 @@ func AddLearningItem(ctx *gin.Context, param dto.LearningItemParam) (int, cerror
 	}
 
 	return learningItem.ID, nil
+
+}
+
+func DelLearningResource(ctx *gin.Context, param admin_dto.DelLearningResourceParam) (int, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	result := mysqlDB.Where("resource_id = ? and learning_id = ?", param.ResourceID, param.LearningID).Delete(&LearningResource{})
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return common.FailedID, cerror.NewCerror(common.Failed, result.Error.Error())
+	}
+
+	return param.LearningID, nil
 
 }
 

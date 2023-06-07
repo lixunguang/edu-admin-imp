@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"edu-imp/internal/admin_dto"
 	"edu-imp/internal/common"
 	"edu-imp/internal/dto"
 	"edu-imp/internal/model/mysql"
@@ -25,7 +26,7 @@ func (Learning) TableName() string {
 func AddLearning(ctx *gin.Context, param dto.Learning) (int, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
 
-	learning := Learning{Title: param.Title, Desc: param.Desc, CoverPictureID: param.CoverPictureID, CategoryID: param.CategoryID}
+	learning := Learning{Title: param.Title, Desc: param.Desc, Author: param.Author, CoverPictureID: param.CoverPictureID, CategoryID: param.CategoryID}
 	result := mysqlDB.Create(&learning)
 
 	if result.Error != nil {
@@ -34,6 +35,40 @@ func AddLearning(ctx *gin.Context, param dto.Learning) (int, cerror.Cerror) {
 	}
 
 	return learning.ID, nil
+}
+
+func DelLearning(ctx *gin.Context, id int) (int, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	result := mysqlDB.Delete(&Learning{}, id)
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return common.FailedID, cerror.NewCerror(common.Failed, result.Error.Error())
+	}
+
+	return id, nil
+}
+
+func UpdateLearning(ctx *gin.Context, param admin_dto.UpdateLearning) (int, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	var learning Learning
+	learning.ID = param.ID
+	learning.Author = param.Author
+	learning.Title = param.Title
+	learning.Desc = param.Desc
+	learning.CoverPictureID = param.PictureID
+	learning.CategoryID = param.CategoryID
+
+	result := mysqlDB.Model(&Learning{}).Where("id = ?", param.ID).Updates(learning)
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return common.FailedID, cerror.NewCerror(common.Failed, result.Error.Error())
+	}
+
+	return param.ID, nil
 }
 
 //获取n个学习资料，根据一定的推荐标准，比如：时间

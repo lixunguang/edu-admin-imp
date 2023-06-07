@@ -41,7 +41,7 @@ func educationAdminRouter(e *gin.Engine) {
 	g.POST("/news/update", admin_controller.NewsUpdate)
 
 	//学习资源
-	g.POST("/learning/category/all", admin_controller.LearningCategoryAll)
+	g.POST("/learning/category/all", admin_controller.LearningCategory)
 	g.POST("/learning/category/add", admin_controller.LearningCategoryAdd)
 	g.POST("/learning/category/del", admin_controller.LearningCategoryDel)
 
@@ -51,7 +51,7 @@ func educationAdminRouter(e *gin.Engine) {
 	g.POST("/learning/del", admin_controller.LearningDel)
 	g.POST("/learning/update", admin_controller.LearningUpdate)
 
-	g.POST("/learning/resource/all", admin_controller.LearningResourceAll)
+	g.POST("/learning/resource", admin_controller.LearningResource)
 	g.POST("/learning/resource/add", admin_controller.LearningResourceAdd)
 	g.POST("/learning/resource/del", admin_controller.LearningResourceDel)
 

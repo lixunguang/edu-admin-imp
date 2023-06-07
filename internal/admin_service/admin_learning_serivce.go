@@ -8,6 +8,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func AddLearning(ctx *gin.Context, param dto.Learning) (int, cerror.Cerror) {
+	return dao.AddLearning(ctx, param)
+}
+
+func DelLearning(ctx *gin.Context, param dto.IDParam) (int, cerror.Cerror) {
+	//todo:删除关联？
+	return dao.DelLearning(ctx, param.ID)
+
+}
+
+func UpdateLearning(ctx *gin.Context, param admin_dto.UpdateLearning) (int, cerror.Cerror) {
+
+	return dao.UpdateLearning(ctx, param)
+}
+
 //根据分类id获取推荐的资源
 func GetLearningAll(ctx *gin.Context) ([]admin_dto.LearningRes, cerror.Cerror) {
 
@@ -48,17 +63,7 @@ func GetLearningByID(ctx *gin.Context, id int) admin_dto.LearningDetailRes {
 	categoryRes, _ := dao.GetLearningCategoryByID(ctx, getRes.CategoryID)
 	res.Category = categoryRes.Title
 
-	learningRes, _ := dao.GetLearningResourceList(ctx, id)
-	for _, val := range learningRes {
-		var item admin_dto.ResourceRes
-		item.ID = val.ID
-		item.Title = val.Title
-		item.Desc = val.Desc
-		item.Index = val.Index
-		item.Content = dao.GetResourceContentFromID(ctx, val.ResourceID)
-
-		res.ResourceList = append(res.ResourceList, item)
-	}
+	res.ResourceList, _ = GetLearningResource(ctx, id)
 
 	return res
 }
@@ -77,4 +82,35 @@ func AddLearningCategory(ctx *gin.Context, param dto.LearningCategory) (int, cer
 func DelLearningCategory(ctx *gin.Context, id int) (int, cerror.Cerror) {
 
 	return dao.DelLearningCategory(ctx, id)
+}
+
+func GetLearningResource(ctx *gin.Context, id int) ([]admin_dto.ResourceRes, cerror.Cerror) {
+
+	var res []admin_dto.ResourceRes
+
+	resList, err := dao.GetLearningResourceList(ctx, id)
+	for _, val := range resList {
+		var item admin_dto.ResourceRes
+		item.ID = val.ID
+		item.Desc = val.Desc
+		item.Title = val.Title
+		item.Content = dao.GetResourceContentFromID(ctx, val.ResourceID)
+		item.Index = val.Index
+		resourceType, _ := dao.GetResourceTypeByID(ctx, val.ResourceID)
+		item.Type = int(resourceType)
+
+		res = append(res, item)
+	}
+
+	return res, err
+}
+
+func AddLearningResource(ctx *gin.Context, param admin_dto.AddLearningResourceParam) (int, cerror.Cerror) {
+
+	return dao.AddLearningResource(ctx, param)
+}
+
+func DelLearningResource(ctx *gin.Context, param admin_dto.DelLearningResourceParam) (int, cerror.Cerror) {
+
+	return dao.DelLearningResource(ctx, param)
 }

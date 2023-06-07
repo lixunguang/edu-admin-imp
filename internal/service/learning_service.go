@@ -10,21 +10,6 @@ import (
 	"strconv"
 )
 
-func AddLearning(ctx *gin.Context, param dto.Learning) (int, cerror.Cerror) {
-
-	return dao.AddLearning(ctx, param)
-}
-
-func AddLearningCategory(ctx *gin.Context, param dto.LearningCategory) (int, cerror.Cerror) {
-
-	return dao.AddLearningCategory(ctx, param)
-}
-
-func AddLearningItem(ctx *gin.Context, param dto.LearningItemParam) (int, cerror.Cerror) {
-
-	return dao.AddLearningItem(ctx, param)
-}
-
 func GetLearningCategory(ctx *gin.Context) ([]dto.LearningCategory, cerror.Cerror) {
 
 	return dao.GetLearningCategory(ctx)
@@ -81,7 +66,7 @@ func GetLearningByID(ctx *gin.Context, id int) dto.LearningInfoRes {
 	return res
 }
 
-//根据分类id获取推荐的资源
+//根据分类id获取推荐的学习资源
 func GetLearningCategoryResourceRecommend(ctx *gin.Context, param dto.IDParam) ([]dto.LearningRecommendRes, cerror.Cerror) {
 
 	var res []dto.LearningRecommendRes
@@ -105,7 +90,7 @@ func GetLearningCategoryResourceRecommend(ctx *gin.Context, param dto.IDParam) (
 	return res, nil
 }
 
-//分页获取分类下的所有资源
+//分页获取分类下的所有学习资源
 func GetLearningCategoryResourcePagedData(ctx *gin.Context, param dto.LearningCategoryParam) (dto.LearningCategoryResourceRes, cerror.Cerror) {
 
 	categoryResource, err := dao.GetLearningCategoryResourcePagedData(ctx, param)

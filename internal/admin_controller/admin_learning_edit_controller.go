@@ -1,9 +1,9 @@
 package admin_controller
 
 import (
+	"edu-imp/internal/admin_dto"
 	"edu-imp/internal/admin_service"
 	"edu-imp/internal/dto"
-	"edu-imp/internal/service"
 	"edu-imp/pkg/cerror"
 	"edu-imp/pkg/logger"
 	"edu-imp/pkg/util"
@@ -13,7 +13,7 @@ import (
 
 // LearningAll 获取所有学习资源
 func LearningAll(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "LearningAdd Controller")
+	logger.Infoc(ctx, "[%s] start ...", "LearningAll Controller")
 	//获取参数
 
 	//参数校验
@@ -32,7 +32,7 @@ func LearningAll(ctx *gin.Context) {
 
 //获取学习资源详情（根据id）
 func Learning(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "learningResource Controller")
+	logger.Infoc(ctx, "[%s] start ...", "Learning Controller")
 	//获取参数
 	var param dto.IDParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -69,9 +69,9 @@ func LearningAdd(ctx *gin.Context) {
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验
-
+	param.Author = "云道教育" //todo：和新闻统一考虑
 	//调用service
-	res, err := service.AddLearning(ctx, param)
+	res, err := admin_service.AddLearning(ctx, param)
 
 	//结果返回
 	if err != nil {
@@ -84,9 +84,9 @@ func LearningAdd(ctx *gin.Context) {
 
 // LearningDel 删除学习资源
 func LearningDel(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "LearningAdd Controller")
+	logger.Infoc(ctx, "[%s] start ...", "LearningDel Controller")
 	//获取参数
-	var param dto.Learning
+	var param dto.IDParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
 		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
 		util.FailJson(ctx, cerror.InvalidParams)
@@ -99,7 +99,7 @@ func LearningDel(ctx *gin.Context) {
 	//参数校验
 
 	//调用service
-	res, err := service.AddLearning(ctx, param)
+	res, err := admin_service.DelLearning(ctx, param)
 
 	//结果返回
 	if err != nil {
@@ -114,7 +114,7 @@ func LearningDel(ctx *gin.Context) {
 func LearningUpdate(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "LearningAdd Controller")
 	//获取参数
-	var param dto.Learning
+	var param admin_dto.UpdateLearning
 	if err := ctx.ShouldBindJSON(&param); err != nil {
 		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
 		util.FailJson(ctx, cerror.InvalidParams)
@@ -127,20 +127,20 @@ func LearningUpdate(ctx *gin.Context) {
 	//参数校验
 
 	//调用service
-	res, err := service.AddLearning(ctx, param)
+	res, err := admin_service.UpdateLearning(ctx, param)
 
 	//结果返回
 	if err != nil {
 		util.FailJson(ctx, err)
 	} else {
-		util.SuccessJson(ctx, res)
+		util.SuccessJson(ctx, dto.IDParam{res})
 	}
 
 }
 
 //获取所有分类
-func LearningCategoryAll(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "LearningCategoryAll Controller")
+func LearningCategory(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "LearningCategory Controller")
 	//获取参数
 
 	//参数校验
@@ -153,7 +153,7 @@ func LearningCategoryAll(ctx *gin.Context) {
 
 }
 
-//增加资源分类
+//增加学习资源分类
 func LearningCategoryAdd(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "LearningCategoryAdd Controller")
 
@@ -182,7 +182,7 @@ func LearningCategoryAdd(ctx *gin.Context) {
 
 }
 
-//删除资源分类
+//删除学习资源分类
 func LearningCategoryDel(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "LearningCategoryAdd Controller")
 
@@ -211,12 +211,12 @@ func LearningCategoryDel(ctx *gin.Context) {
 
 }
 
-// LearningResourceAdd 增加资源条目.
-func LearningResourceAll(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "LearningResourceAdd Controller")
+// LearningResource 获取学习资源的视频资源.
+func LearningResource(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "LearningResource Controller")
 
 	//获取参数
-	var param dto.LearningItemParam
+	var param dto.IDParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
 		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
 		util.FailJson(ctx, cerror.InvalidParams)
@@ -229,7 +229,7 @@ func LearningResourceAll(ctx *gin.Context) {
 	//参数校验
 
 	//调用service
-	res, err := service.AddLearningItem(ctx, param)
+	res, err := admin_service.GetLearningResource(ctx, param.ID)
 
 	//结果返回
 	if err != nil {
@@ -245,7 +245,7 @@ func LearningResourceAdd(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "LearningResourceAdd Controller")
 
 	//获取参数
-	var param dto.LearningItemParam
+	var param admin_dto.AddLearningResourceParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
 		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
 		util.FailJson(ctx, cerror.InvalidParams)
@@ -258,7 +258,7 @@ func LearningResourceAdd(ctx *gin.Context) {
 	//参数校验
 
 	//调用service
-	res, err := service.AddLearningItem(ctx, param)
+	res, err := admin_service.AddLearningResource(ctx, param)
 
 	//结果返回
 	if err != nil {
@@ -274,7 +274,7 @@ func LearningResourceDel(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "LearningResourceAdd Controller")
 
 	//获取参数
-	var param dto.LearningItemParam
+	var param admin_dto.DelLearningResourceParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
 		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
 		util.FailJson(ctx, cerror.InvalidParams)
@@ -287,7 +287,7 @@ func LearningResourceDel(ctx *gin.Context) {
 	//参数校验
 
 	//调用service
-	res, err := service.AddLearningItem(ctx, param)
+	res, err := admin_service.DelLearningResource(ctx, param)
 
 	//结果返回
 	if err != nil {

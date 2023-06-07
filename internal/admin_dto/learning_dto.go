@@ -9,6 +9,15 @@ type LearningRes struct {
 	Category   string `json:"category"`
 }
 
+type UpdateLearning struct {
+	ID         int    `json:"id"`
+	Title      string `json:"title"`
+	Desc       string `json:"desc"`
+	Author     string `json:"author"`
+	PictureID  int    `json:"picture_id"`
+	CategoryID int    `json:"category_id"`
+}
+
 type LearningDetailRes struct {
 	ID         int    `json:"id"`
 	Title      string `json:"title"`
@@ -18,4 +27,17 @@ type LearningDetailRes struct {
 	Category   string `json:"category"`
 
 	ResourceList []ResourceRes `json:"resource_list"`
+}
+
+type AddLearningResourceParam struct {
+	LearningID int    `json:"learning_id"`
+	Title      string `json:"title"`
+	Desc       string `json:"desc"`
+	ResourceID int    `json:"resource_id"`
+	Index      int    `json:"index"`
+}
+
+type DelLearningResourceParam struct {
+	LearningID int `json:"learning_id"`
+	ResourceID int `json:"resource_id"`
 }

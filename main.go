@@ -31,7 +31,7 @@ func main() {
 	//文件服务器3
 	r.Use(static.Serve("/design", static.LocalFile(config.GetExecDirectory()+"/design", false)))
 	//文件服务器4
-	r.Use(static.Serve("/", static.LocalFile(config.GetExecDirectory()+"/dist", false)))
+	r.Use(static.Serve("/", static.LocalFile(config.GetExecDirectory()+"/dist2", false)))
 
 	r.NoRoute(func(c *gin.Context) {
 		accept := c.Request.Header.Get("Accept")
