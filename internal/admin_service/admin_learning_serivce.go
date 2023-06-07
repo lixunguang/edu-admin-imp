@@ -91,10 +91,10 @@ func GetLearningResource(ctx *gin.Context, id int) ([]admin_dto.ResourceRes, cer
 	resList, err := dao.GetLearningResourceList(ctx, id)
 	for _, val := range resList {
 		var item admin_dto.ResourceRes
-		item.ID = val.ID
+		item.ID = val.ResourceID
 		item.Desc = val.Desc
 		item.Title = val.Title
-		item.Content = dao.GetResourceContentFromID(ctx, val.ResourceID)
+		item.ContentUrl = dao.GetResourceContentFromID(ctx, val.ResourceID)
 		item.Index = val.Index
 		resourceType, _ := dao.GetResourceTypeByID(ctx, val.ResourceID)
 		item.Type = int(resourceType)

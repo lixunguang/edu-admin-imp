@@ -64,15 +64,3 @@ type LessonResourceDelParam struct {
 	LessonID   int `json:"lesson_id"`
 	ResourceID int `json:"resource_id"`
 }
-
-/*
-
-type LessonSectionContent struct {
-	LessonID    int    `json:"lesson_id"`
-	Title       string `json:"title"`
-	Desc       string `json:"desc"`
-	Content     string `json:"content"`
-	ContentType int    `json:"content_type"`
-	ContentIndex       int `json:"content_index"`//用于展示时排序或者资源用途（当为作业时）。
-}
-*/

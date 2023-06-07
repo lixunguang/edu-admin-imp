@@ -21,10 +21,10 @@ type UpdateRichtextParam struct {
 }
 
 type ResourceRes struct {
-	Title   string `json:"title"`
-	Desc    string `json:"desc"`
-	Content string `json:"content"`
-	Type    int    `json:"type"`
-	ID      int    `json:"id"`
-	Index   int    `json:"index"`
+	Title      string `json:"title"`
+	Desc       string `json:"desc"`
+	ContentUrl string `json:"content_url"`
+	Type       int    `json:"type"`
+	ID         int    `json:"id"`
+	Index      int    `json:"index"`
 }
