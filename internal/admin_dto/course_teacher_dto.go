@@ -17,9 +17,18 @@ type UpdateTeacherParam struct {
 	OrganizationID int    `json:"organization_id"`
 	Introduce      string `json:"introduce"`
 }
-
-type Teacher struct {
+type AddTeacherParam struct {
 	//LoginID        string `json:"login_id"`
+
+	Name           string `json:"name"`
+	Password       string `json:"password"`
+	OrganizationID int    `json:"organization_id"`
+	Introduce      string `json:"introduce"`
+}
+
+type TeacherRes struct {
+	//LoginID        string `json:"login_id"`
+	ID             int    `json:"id"`
 	Name           string `json:"name"`
 	Password       string `json:"password"`
 	OrganizationID int    `json:"organization_id"`

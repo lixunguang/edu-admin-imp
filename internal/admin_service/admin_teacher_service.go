@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddTeacher(ctx *gin.Context, param admin_dto.Teacher) (dto.AdminRes, cerror.Cerror) {
+func AddTeacher(ctx *gin.Context, param admin_dto.AddTeacherParam) (dto.AdminRes, cerror.Cerror) {
 
 	adminArray, _ := dao.GetTeacherByName(ctx, param.Name)
 
@@ -33,18 +33,19 @@ func DelTeacher(ctx *gin.Context, name string) (string, cerror.Cerror) {
 	return dao.DelTeacher(ctx, name)
 }
 
-func AllTeacher(ctx *gin.Context) ([]admin_dto.Teacher, cerror.Cerror) {
+func AllTeacher(ctx *gin.Context) ([]admin_dto.TeacherRes, cerror.Cerror) {
 
-	var res []admin_dto.Teacher
+	var res []admin_dto.TeacherRes
 
 	allRes, err := dao.AllTeacher(ctx)
 
 	for _, val := range allRes {
-		var item admin_dto.Teacher
+		var item admin_dto.TeacherRes
 		item.Introduce = val.Introduce
 		item.OrganizationID = val.OrganizationID
 		item.Name = val.Name
 		item.Password = val.Password
+		item.ID = val.ID
 
 		res = append(res, item)
 

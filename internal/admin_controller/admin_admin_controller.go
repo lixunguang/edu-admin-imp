@@ -160,7 +160,7 @@ func GetAdmin(ctx *gin.Context) {
 func AddTeacher(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "admin AddTeacher Controller")
 	//获取参数
-	var param admin_dto.Teacher
+	var param admin_dto.AddTeacherParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
 		logger.Errorc(ctx, "[%s] bind param fail,err=%+v", "method", err)
 		util.FailJson(ctx, cerror.InvalidParams)
