@@ -71,7 +71,7 @@ func GetUser(ctx *gin.Context) {
 	} else {
 		var fake UserFake //todo：remove THIS not used
 		fake.Name = user.Name
-		fake.LoginId = user.LoginId
+		fake.LoginID = user.LoginID
 		fake.OrganizationID = 1 //todo:for test
 
 		fake.Role = 1 // todo:role需要填上值

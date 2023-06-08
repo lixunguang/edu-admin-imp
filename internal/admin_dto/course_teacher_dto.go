@@ -5,3 +5,23 @@ type CourseTeacherParam struct {
 	CourseID  int `json:"course_id" binding:"required"`
 	TeacherId int `json:"teacher_id"`
 }
+type TeacherParam struct {
+	Name string `json:"name"`
+}
+
+type UpdateTeacherParam struct {
+	//	LoginID        string `json:"login_id"`
+	ID             int    `json:"id"`
+	Name           string `json:"name"`
+	Password       string `json:"password"`
+	OrganizationID int    `json:"organization_id"`
+	Introduce      string `json:"introduce"`
+}
+
+type Teacher struct {
+	//LoginID        string `json:"login_id"`
+	Name           string `json:"name"`
+	Password       string `json:"password"`
+	OrganizationID int    `json:"organization_id"`
+	Introduce      string `json:"introduce"`
+}

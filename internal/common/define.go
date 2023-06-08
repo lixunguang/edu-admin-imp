@@ -33,6 +33,7 @@ var (
 	ErrorTokenExpire     = cerror.NewCerror(10002, "token过期")
 	ErrorTokenEmpty      = cerror.NewCerror(10003, "token为空")
 	ErrorUserExist       = cerror.NewCerror(10005, "用户已经存在")
+	ErrorUserNotExist    = cerror.NewCerror(10004, "用户不存在")
 	ErrorRecordExist     = cerror.NewCerror(10006, "操作不允许:记录已经存在")
 	ErrorAddCourseFailed = cerror.NewCerror(10007, "增加课程失败")
 

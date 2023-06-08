@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"edu-imp/internal/admin_dto"
 	"edu-imp/internal/common"
 	"edu-imp/internal/dto"
 	"edu-imp/internal/model/mysql"
@@ -13,7 +14,7 @@ type Teacher struct {
 	BaseModel
 	LoginID        string `gorm:"column:login_name"`
 	Name           string `gorm:"column:name"`      //姓名
-	Introduce      int    `gorm:"column:introduce"` //所属院系
+	Introduce      string `gorm:"column:introduce"` //介绍
 	Password       string `gorm:"column:password"`
 	PhoneNumber    string `gorm:"column:phone_number"`
 	OrganizationID int    `gorm:"column:organization_id"` //创建本用户的管理员id
@@ -63,10 +64,9 @@ func GetTeacherByName(ctx *gin.Context, name string) ([]Admin, cerror.Cerror) {
 }
 
 //这个函数需要重构，因为名字可能重复，目前假设名字唯一
-func AddTeacher(ctx *gin.Context, name string) (dto.AdminRes, cerror.Cerror) {
+func AddTeacher(ctx *gin.Context, teacher Teacher) (dto.AdminRes, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
 
-	teacher := Teacher{Name: name}
 	result := mysqlDB.Create(&teacher)
 
 	var res dto.AdminRes
@@ -80,4 +80,52 @@ func AddTeacher(ctx *gin.Context, name string) (dto.AdminRes, cerror.Cerror) {
 	res.ID = teacher.ID
 
 	return res, nil
+}
+
+//这个函数需要重构，因为名字可能重复，目前假设名字唯一
+func DelTeacher(ctx *gin.Context, name string) (string, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	result := mysqlDB.Where("name = ?", name).Delete(&Teacher{})
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return name, cerror.NewCerror(common.FailedID, result.Error.Error())
+	}
+
+	if result.RowsAffected == 0 {
+		return name, common.ErrorUserNotExist
+	}
+
+	return name, nil
+}
+
+//这个函数需要重构，因为名字可能重复，目前假设名字唯一
+func UpdateTeacher(ctx *gin.Context, param admin_dto.UpdateTeacherParam) (string, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	teacher := Teacher{Name: param.Name, LoginID: param.Name, Password: param.Password, OrganizationID: param.OrganizationID, Introduce: param.Introduce}
+	result := mysqlDB.Where("id = ?", param.ID).Updates(teacher)
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return param.Name, cerror.NewCerror(common.FailedID, result.Error.Error())
+	}
+
+	return param.Name, nil
+}
+
+//这个函数需要重构，因为名字可能重复，目前假设名字唯一
+func AllTeacher(ctx *gin.Context) ([]Teacher, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	var teachers []Teacher
+	result := mysqlDB.Order("updated_at desc").Find(&teachers)
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return teachers, cerror.NewCerror(common.Failed, result.Error.Error())
+	}
+
+	return teachers, nil
 }

@@ -20,12 +20,17 @@ func educationAdminRouter(e *gin.Engine) {
 	g.POST("/copyright", admin_controller.Copyright)
 
 	// 用户 增加 删除 查找
-	g.POST("/user/add", admin_controller.AddUser)
-	g.POST("/user/del", admin_controller.DelUser)
+	g.POST("/student/add", admin_controller.AddUser) //增加学生
+	g.POST("/student/del", admin_controller.DelUser)
+	g.POST("/student/all", admin_controller.AllUser)
+	g.POST("/student/update", admin_controller.UpdateUser)
+
 	g.POST("/user", admin_controller.GetUser) //后台api与平台api共用一个
 
 	g.POST("/teacher/add", admin_controller.AddTeacher) //增加教师
-	g.POST("/teacher", admin_controller.AddTeacher)     //获取教师列表
+	g.POST("/teacher/del", admin_controller.DelTeacher)
+	g.POST("/teacher/all", admin_controller.AllTeacher)
+	g.POST("/teacher/update", admin_controller.UpdateTeacher)
 
 	// 管理员 增加 删除 查找
 	g.POST("/administrator/add", admin_controller.AddAdmin)

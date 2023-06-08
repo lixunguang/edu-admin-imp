@@ -33,27 +33,83 @@ func AddUser(ctx *gin.Context, param dto.User) (dto.AddUserRes, cerror.Cerror) {
 	var res dto.AddUserRes
 
 	getResult, err := GetUser(ctx, param.LoginID)
-	if err != nil { // 数据库操作失败
+	if err != nil { // 数据库操作失败,未查到
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err")
-		return res, err
+		//return res, err
+
+		user := User{LoginID: param.LoginID, Name: param.Name, Password: param.Password, OrganizationID: param.OrganizationID}
+		result := mysqlDB.Create(&user)
+
+		if result.Error != nil {
+			logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+			return res, cerror.NewCerror(common.FailedID, result.Error.Error())
+		}
+
+		res.ID = user.ID
+		res.Name = user.Name
+		return res, nil
 	}
 
-	if getResult.LoginId != "" { // 重复的用户
+	if getResult.LoginID != "" { // 重复的用户
 		return res, common.ErrorUserExist
 	}
 
-	user := User{LoginID: param.LoginID, Name: param.Name, Password: param.Password, OrganizationID: param.OrganizationID}
-	result := mysqlDB.Create(&user)
+	return res, common.ErrorUserExist
+}
+
+// 删除用户
+func DelUser(ctx *gin.Context, login_id string) (string, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	result := mysqlDB.Where("login_id = ?", login_id).Delete(&User{})
 
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
-		return res, cerror.NewCerror(common.FailedID, result.Error.Error())
+		return login_id, cerror.NewCerror(common.FailedID, result.Error.Error())
 	}
 
-	res.ID = user.ID
-	res.Name = user.Name
+	if result.RowsAffected == 0 {
+		return login_id, common.ErrorUserNotExist
+	}
 
-	return res, nil
+	return login_id, nil
+}
+
+// 删除用户
+func UpdateUser(ctx *gin.Context, param dto.User) (string, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+	var user User
+	user.OrganizationID = param.OrganizationID
+	user.LoginID = param.LoginID
+	user.Name = param.Name
+	user.Password = param.Password
+
+	result := mysqlDB.Model(&User{}).Where("login_id = ?", param.LoginID).Updates(user)
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return "", cerror.NewCerror(common.FailedID, result.Error.Error())
+	}
+
+	if result.RowsAffected == 0 {
+		return param.LoginID, common.ErrorUserNotExist
+	}
+
+	return param.LoginID, nil
+}
+
+func AllUser(ctx *gin.Context) ([]User, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	var users []User
+	result := mysqlDB.Order("updated_at desc").Find(&users)
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return users, cerror.NewCerror(common.Failed, result.Error.Error())
+	}
+
+	return users, nil
 }
 
 func GetUser(ctx *gin.Context, loginID string) (dto.UserRes, cerror.Cerror) {
@@ -70,7 +126,7 @@ func GetUser(ctx *gin.Context, loginID string) (dto.UserRes, cerror.Cerror) {
 
 	userRes.Name = user.Name
 	userRes.OrganizationID = user.OrganizationID
-	userRes.LoginId = user.LoginID
+	userRes.LoginID = user.LoginID
 
 	return userRes, nil
 }

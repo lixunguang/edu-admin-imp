@@ -138,7 +138,7 @@ func GetUser(ctx *gin.Context) {
 		var fake UserFake //todo：remove THIS not used
 		if len(user) > 0 {
 			fake.Name = user[0].Name
-			fake.LoginId = user[0].Name
+			fake.LoginID = user[0].Name
 		}
 
 		fake.UserID = user[0].ID
