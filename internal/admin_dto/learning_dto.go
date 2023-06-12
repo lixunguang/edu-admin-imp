@@ -19,12 +19,14 @@ type UpdateLearning struct {
 }
 
 type LearningDetailRes struct {
-	ID         int    `json:"id"`
-	Title      string `json:"title"`
-	Desc       string `json:"desc"`
-	Author     string `json:"author"`
-	PictureUrl string `json:"picture_url"`
-	Category   string `json:"category"`
+	ID          int    `json:"id"`
+	Title       string `json:"title"`
+	Desc        string `json:"desc"`
+	Author      string `json:"author"`
+	PictureName string `json:"picture_name"`
+	PictureID   int    `json:"picture_id"`
+	PictureUrl  string `json:"picture_url"`
+	Category    string `json:"category"`
 
 	ResourceList []ResourceRes `json:"resource_list"`
 }

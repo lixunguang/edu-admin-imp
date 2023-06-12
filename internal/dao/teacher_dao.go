@@ -83,29 +83,29 @@ func AddTeacher(ctx *gin.Context, teacher Teacher) (dto.AdminRes, cerror.Cerror)
 }
 
 //这个函数需要重构，因为名字可能重复，目前假设名字唯一
-func DelTeacher(ctx *gin.Context, name string) (string, cerror.Cerror) {
+func DelTeacher(ctx *gin.Context, loginID string) (string, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
 
-	result := mysqlDB.Where("name = ?", name).Delete(&Teacher{})
+	result := mysqlDB.Where("login_name = ?", loginID).Delete(&Teacher{})
 
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
-		return name, cerror.NewCerror(common.FailedID, result.Error.Error())
+		return loginID, cerror.NewCerror(common.FailedID, result.Error.Error())
 	}
 
 	if result.RowsAffected == 0 {
-		return name, common.ErrorUserNotExist
+		return loginID, common.ErrorUserNotExist
 	}
 
-	return name, nil
+	return loginID, nil
 }
 
 //这个函数需要重构，因为名字可能重复，目前假设名字唯一
 func UpdateTeacher(ctx *gin.Context, param admin_dto.UpdateTeacherParam) (string, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
 
-	teacher := Teacher{Name: param.Name, LoginID: param.Name, Password: param.Password, OrganizationID: param.OrganizationID, Introduce: param.Introduce}
-	result := mysqlDB.Where("id = ?", param.ID).Updates(teacher)
+	teacher := Teacher{Name: param.Name, LoginID: param.LoginID, Password: param.Password, OrganizationID: param.OrganizationID, Introduce: param.Introduce}
+	result := mysqlDB.Where("login_name = ?", param.LoginID).Updates(teacher)
 
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)

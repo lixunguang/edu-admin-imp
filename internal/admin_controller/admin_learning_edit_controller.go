@@ -69,7 +69,7 @@ func LearningAdd(ctx *gin.Context) {
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验
-	param.Author = "云道教育" //todo：和新闻统一考虑
+	//param.Author = "云道教育" //todo：和新闻统一考虑
 	//调用service
 	res, err := admin_service.AddLearning(ctx, param)
 
@@ -77,7 +77,7 @@ func LearningAdd(ctx *gin.Context) {
 	if err != nil {
 		util.FailJson(ctx, err)
 	} else {
-		util.SuccessJson(ctx, res)
+		util.SuccessJson(ctx, dto.IDRes{res})
 	}
 
 }
@@ -105,7 +105,7 @@ func LearningDel(ctx *gin.Context) {
 	if err != nil {
 		util.FailJson(ctx, err)
 	} else {
-		util.SuccessJson(ctx, res)
+		util.SuccessJson(ctx, dto.IDRes{res})
 	}
 
 }
@@ -172,6 +172,35 @@ func LearningCategoryAdd(ctx *gin.Context) {
 
 	//调用service
 	res, err := admin_service.AddLearningCategory(ctx, param)
+
+	//结果返回
+	if err != nil {
+		util.FailJson(ctx, err)
+	} else {
+		util.SuccessJson(ctx, dto.IDRes{res})
+	}
+
+}
+
+//增加学习资源分类
+func LearningCategoryUpdate(ctx *gin.Context) {
+	logger.Infoc(ctx, "[%s] start ...", "LearningCategoryUpdate Controller")
+
+	//获取参数
+	var param dto.UpdateLearningCategoryParam
+	if err := ctx.ShouldBindJSON(&param); err != nil {
+		logger.Errorc(ctx, "[%s] bind params fail,err=%+v", "method", err)
+		util.FailJson(ctx, cerror.InvalidParams)
+		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
+	//参数校验
+
+	//调用service
+	res, err := admin_service.UpdateLearningCategory(ctx, param)
 
 	//结果返回
 	if err != nil {
@@ -264,7 +293,7 @@ func LearningResourceAdd(ctx *gin.Context) {
 	if err != nil {
 		util.FailJson(ctx, err)
 	} else {
-		util.SuccessJson(ctx, res)
+		util.SuccessJson(ctx, dto.IDRes{res})
 	}
 
 }
@@ -293,7 +322,7 @@ func LearningResourceDel(ctx *gin.Context) {
 	if err != nil {
 		util.FailJson(ctx, err)
 	} else {
-		util.SuccessJson(ctx, res)
+		util.SuccessJson(ctx, dto.IDRes{res})
 	}
 
 }

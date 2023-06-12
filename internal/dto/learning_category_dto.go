@@ -13,3 +13,9 @@ type LearningCategoryParam struct {
 	CurrentPage int `json:"current_page"`
 	PageSize    int `json:"page_size"`
 }
+
+type UpdateLearningCategoryParam struct {
+	ID    int    `json:"id"`
+	Title string `json:"title"`
+	Desc  string `json:"desc"`
+}

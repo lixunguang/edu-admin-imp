@@ -49,6 +49,7 @@ func educationAdminRouter(e *gin.Engine) {
 	g.POST("/learning/category/all", admin_controller.LearningCategory)
 	g.POST("/learning/category/add", admin_controller.LearningCategoryAdd)
 	g.POST("/learning/category/del", admin_controller.LearningCategoryDel)
+	g.POST("/learning/category/update", admin_controller.LearningCategoryUpdate)
 
 	g.POST("/learning", admin_controller.Learning)
 	g.POST("/learning/all", admin_controller.LearningAll)

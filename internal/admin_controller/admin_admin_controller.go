@@ -202,7 +202,7 @@ func AllTeacher(ctx *gin.Context) {
 func DelTeacher(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "admin DelTeacher Controller")
 	//获取参数
-	var param admin_dto.TeacherParam
+	var param dto.IDParam2
 	if err := ctx.ShouldBindJSON(&param); err != nil {
 		logger.Errorc(ctx, "[%s] bind param fail,err=%+v", "method", err)
 		util.FailJson(ctx, cerror.InvalidParams)
@@ -212,7 +212,7 @@ func DelTeacher(ctx *gin.Context) {
 	//参数校验
 
 	//调用service
-	res, err := admin_service.DelTeacher(ctx, param.Name)
+	res, err := admin_service.DelTeacher(ctx, param.LoginID)
 
 	//结果返回
 	if err == nil {

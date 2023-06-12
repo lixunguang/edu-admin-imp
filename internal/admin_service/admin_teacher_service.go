@@ -16,7 +16,7 @@ func AddTeacher(ctx *gin.Context, param admin_dto.AddTeacherParam) (dto.AdminRes
 	if len(adminArray) == 0 {
 		var teacher dao.Teacher
 		teacher.Name = param.Name
-		teacher.LoginID = param.Name
+		teacher.LoginID = param.LoginID
 		teacher.Password = param.Password
 		teacher.OrganizationID = param.OrganizationID
 		teacher.Introduce = param.Introduce
@@ -28,9 +28,9 @@ func AddTeacher(ctx *gin.Context, param admin_dto.AddTeacherParam) (dto.AdminRes
 	return res, common.ErrorUserExist
 }
 
-func DelTeacher(ctx *gin.Context, name string) (string, cerror.Cerror) {
+func DelTeacher(ctx *gin.Context, loginID string) (string, cerror.Cerror) {
 
-	return dao.DelTeacher(ctx, name)
+	return dao.DelTeacher(ctx, loginID)
 }
 
 func AllTeacher(ctx *gin.Context) ([]admin_dto.TeacherRes, cerror.Cerror) {
@@ -45,7 +45,7 @@ func AllTeacher(ctx *gin.Context) ([]admin_dto.TeacherRes, cerror.Cerror) {
 		item.OrganizationID = val.OrganizationID
 		item.Name = val.Name
 		item.Password = val.Password
-		item.ID = val.ID
+		item.LoginID = val.LoginID
 
 		res = append(res, item)
 

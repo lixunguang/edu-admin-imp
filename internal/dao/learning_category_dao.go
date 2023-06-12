@@ -33,6 +33,20 @@ func AddLearningCategory(ctx *gin.Context, param dto.LearningCategory) (int, cer
 	return learningCategory.ID, nil
 }
 
+func UpdateLearningCategory(ctx *gin.Context, param dto.UpdateLearningCategoryParam) (int, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	learningCategory := LearningCategory{Title: param.Title, Desc: param.Desc}
+	result := mysqlDB.Where("id=?", param.ID).Updates(learningCategory)
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return common.FailedID, cerror.NewCerror(common.Failed, result.Error.Error())
+	}
+
+	return learningCategory.ID, nil
+}
+
 func DelLearningCategory(ctx *gin.Context, id int) (int, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
 
@@ -52,7 +66,7 @@ func GetLearningCategory(ctx *gin.Context) ([]dto.LearningCategory, cerror.Cerro
 	var res []dto.LearningCategory
 
 	var learningCategory []LearningCategory
-	result := mysqlDB.Select("id", "title", "desc").Find(&learningCategory)
+	result := mysqlDB.Select("id", "title", "desc").Order("updated_at desc").Find(&learningCategory)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
 		return res, cerror.NewCerror(common.Failed, result.Error.Error())

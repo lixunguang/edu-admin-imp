@@ -10,16 +10,15 @@ type TeacherParam struct {
 }
 
 type UpdateTeacherParam struct {
-	//	LoginID        string `json:"login_id"`
-	ID             int    `json:"id"`
+	LoginID string `json:"login_id"`
+	//	ID             int    `json:"id"`
 	Name           string `json:"name"`
 	Password       string `json:"password"`
 	OrganizationID int    `json:"organization_id"`
 	Introduce      string `json:"introduce"`
 }
 type AddTeacherParam struct {
-	//LoginID        string `json:"login_id"`
-
+	LoginID        string `json:"login_id"`
 	Name           string `json:"name"`
 	Password       string `json:"password"`
 	OrganizationID int    `json:"organization_id"`
@@ -27,8 +26,8 @@ type AddTeacherParam struct {
 }
 
 type TeacherRes struct {
-	//LoginID        string `json:"login_id"`
-	ID             int    `json:"id"`
+	LoginID string `json:"login_id"`
+	//ID             int    `json:"id"`
 	Name           string `json:"name"`
 	Password       string `json:"password"`
 	OrganizationID int    `json:"organization_id"`

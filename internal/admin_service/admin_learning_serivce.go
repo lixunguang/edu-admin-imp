@@ -59,7 +59,9 @@ func GetLearningByID(ctx *gin.Context, id int) admin_dto.LearningDetailRes {
 	res.Desc = getRes.Desc
 	res.Title = getRes.Title
 	res.Author = getRes.Author
+	res.PictureName, _ = dao.GetResourceTitleByID(ctx, getRes.CoverPictureID)
 	res.PictureUrl = dao.GetResourceContentFromID(ctx, getRes.CoverPictureID)
+	res.PictureID = getRes.CoverPictureID
 	categoryRes, _ := dao.GetLearningCategoryByID(ctx, getRes.CategoryID)
 	res.Category = categoryRes.Title
 
@@ -77,6 +79,11 @@ func GetLearningCategory(ctx *gin.Context) ([]dto.LearningCategory, cerror.Cerro
 func AddLearningCategory(ctx *gin.Context, param dto.LearningCategory) (int, cerror.Cerror) {
 
 	return dao.AddLearningCategory(ctx, param)
+}
+
+func UpdateLearningCategory(ctx *gin.Context, param dto.UpdateLearningCategoryParam) (int, cerror.Cerror) {
+
+	return dao.UpdateLearningCategory(ctx, param)
 }
 
 func DelLearningCategory(ctx *gin.Context, id int) (int, cerror.Cerror) {
