@@ -96,32 +96,32 @@ func DelAdmin(ctx *gin.Context, param dto.AdminParam) ([]Admin, cerror.Cerror) {
 }
 
 // 校验用户名及密码
-func CheckAdmin(ctx *gin.Context, userName string, password string) (int, cerror.Cerror) {
+func CheckAdmin(ctx *gin.Context, name string, password string) cerror.Cerror {
 
 	db := mysql.GetDB()
 
 	// query
 	u := Admin{}
 
-	result := db.Where("name = ? ", userName).First(&u)
+	result := db.Where("name = ? ", name).First(&u)
 	if result.Error != nil {
-		logger.Warnc(ctx, "[userDao.CheckUser] fail,err=%+v, loginId=%d", result.Error, userName)
-		return common.ErrorFindUser, cerror.DbSelectError
+		logger.Warnc(ctx, "[userDao.CheckUser] fail,err=%+v, loginId=%d", result.Error, name)
+		return common.ErrorUserNotExist
 	}
 
 	if u.Name == "" { // 用户不存在
-		return common.ErrorFindUser, nil
+		return common.ErrorUserNotExist
 	}
 
-	result = db.Where("password = ?", password).First(&u)
+	result = db.Where("name = ? and password = ?", name, password).First(&u)
 	if result.Error != nil {
-		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v, loginId=%d", result.Error, userName)
-		return common.ErrorPassword, cerror.DbSelectError
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v, loginId=%d", result.Error, name)
+		return common.ErrorPassword
 	}
 
 	if u.Name == "" { // 密码错误
-		return common.ErrorPassword, nil
+		return common.ErrorPassword
 	}
 
-	return common.CheckOK, nil
+	return common.ErrorOK
 }

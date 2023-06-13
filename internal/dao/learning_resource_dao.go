@@ -22,10 +22,10 @@ func (LearningResource) TableName() string {
 	return "learning_resource"
 }
 
-func AddLearningResource(ctx *gin.Context, param admin_dto.AddLearningResourceParam) (int, cerror.Cerror) {
+func AddLearningResource(ctx *gin.Context, title string, desc string, param admin_dto.AddLearningResourceParam) (int, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
 
-	var learningItem = LearningResource{Title: param.Title, Desc: param.Desc, LearningID: param.LearningID, ResourceID: param.ResourceID, Index: param.Index}
+	var learningItem = LearningResource{Title: title, Desc: desc, LearningID: param.LearningID, ResourceID: param.ResourceID, Index: param.Index}
 	result := mysqlDB.Create(&learningItem)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)

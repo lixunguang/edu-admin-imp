@@ -131,37 +131,6 @@ func GetUser(ctx *gin.Context, loginID string) (dto.UserRes, cerror.Cerror) {
 	return userRes, nil
 }
 
-// 校验用户名及密码
-func CheckUser(ctx *gin.Context, loginId string, password string) (int, cerror.Cerror) {
-
-	db := mysql.GetDB()
-
-	// query
-	u := User{}
-
-	result := db.Where("login_id = ? ", loginId).First(&u)
-	if result.Error != nil {
-		logger.Warnc(ctx, "[userDao.CheckUser] fail,err=%+v, loginId=%d", result.Error, loginId)
-		return common.ErrorFindUser, cerror.DbSelectError
-	}
-
-	if u.Name == "" { // 用户不存在
-		return common.ErrorFindUser, nil
-	}
-
-	result = db.Where("password = ?", password).First(&u)
-	if result.Error != nil {
-		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v, loginId=%d", result.Error, loginId)
-		return common.ErrorPassword, cerror.DbSelectError
-	}
-
-	if u.Name == "" { // 密码错误
-		return common.ErrorPassword, nil
-	}
-
-	return common.CheckOK, nil
-}
-
 // 根据userid获取username
 func GetUserNameByUserID(ctx *gin.Context, userID []int) []string {
 	mysqlDB := mysql.GetDB()

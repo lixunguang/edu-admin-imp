@@ -20,6 +20,35 @@ import (
 // 重复登录，存储新的token，之前token失效。
 // 过期检查
 
+func CheckAdminAuth(c *gin.Context) {
+
+	token := c.GetHeader("Authorization")
+	logger.Infoc(c, "checkAuth:%p\n", token)
+
+	if token == "" {
+		util.FailJson(c, common.ErrorTokenEmpty)
+		c.Abort()
+		return
+	}
+
+	user, err := middleware.ParseAdminToken(token)
+	if err != nil {
+		util.FailJson(c, err)
+		c.Abort()
+		return
+	}
+
+	isLogin := admin_service.IsLogin(user)
+	if !isLogin {
+		util.FailJson(c, common.ErrorUserNotExist)
+		c.Abort()
+		return
+	}
+
+	c.Next()
+
+}
+
 func AdminLogin(ctx *gin.Context) {
 	logger.Infoc(ctx, "[%s] start ...", "adminLogin Controller")
 	// 获取参数
@@ -39,19 +68,12 @@ func AdminLogin(ctx *gin.Context) {
 	tokenStr, res := admin_service.Login(ctx, param.Name, param.Password)
 
 	// 结果返回
-	//todo:处理下结果返回，从service层返回err
-	if res == common.SuccessLoginAgain || res == common.SuccessLogin {
-		var loginRes dto.LoginRes
-		loginRes.Token = tokenStr
-		loginRes.FirstLogin = false
+	fmt.Println(res)
 
-		util.SuccessJson(ctx, loginRes)
+	var loginRes dto.LoginRes
+	loginRes.Token = tokenStr
 
-	} else if res == common.ErrorFindUser {
-		util.FailJson(ctx, cerror.ErrorFindUser)
-	} else if res == common.ErrorPassword {
-		util.FailJson(ctx, cerror.ErrorPassword)
-	}
+	util.SuccessJson(ctx, loginRes)
 
 }
 
@@ -121,7 +143,6 @@ func GetUser(ctx *gin.Context) {
 	//获取参数
 
 	tokenStr := ctx.GetHeader("Authorization")
-
 	loginId := GetIdByToken(tokenStr)
 
 	//参数校验

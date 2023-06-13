@@ -32,11 +32,11 @@ type LearningDetailRes struct {
 }
 
 type AddLearningResourceParam struct {
-	LearningID int    `json:"learning_id"`
-	Title      string `json:"title"`
-	Desc       string `json:"desc"`
-	ResourceID int    `json:"resource_id"`
-	Index      int    `json:"index"`
+	LearningID int `json:"learning_id"`
+	//Title      string `json:"title"`
+	//Desc       string `json:"desc"`
+	ResourceID int `json:"resource_id"`
+	Index      int `json:"index"`
 }
 
 type DelLearningResourceParam struct {

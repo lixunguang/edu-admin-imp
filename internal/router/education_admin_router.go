@@ -13,7 +13,7 @@ func educationAdminRouter(e *gin.Engine) {
 	//权限 perm
 	g.POST("/perm/login", admin_controller.AdminLogin)
 	//if !util.IsDebug() {
-	//g.Use(middleware.CheckAdminAuth)
+	g.Use(admin_controller.CheckAdminAuth) //middleware
 	//}
 
 	g.POST("/perm/logout", admin_controller.AdminLogout)

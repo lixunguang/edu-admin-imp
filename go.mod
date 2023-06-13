@@ -10,9 +10,8 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/spf13/viper v1.11.0
 	github.com/tidwall/gjson v1.14.1
-	github.com/yuin/goldmark v1.5.4 // indirect
+	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/text v0.9.0
-	golang.org/x/tools v0.9.1 // indirect
 	gorm.io/driver/mysql v1.4.7
 	gorm.io/gorm v1.24.6
 

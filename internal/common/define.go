@@ -18,26 +18,20 @@ const (
 	FailedID = -1 //-1为不合法的id，一般为插入失败,最初为0  //todo：重构
 )
 
-const (
-	CheckOK           = 0
-	SuccessLogin      = 0 //0 登录成功,更新token
-	SuccessLoginAgain = 1 //1 用户已经在其他地方登录，更新token
-	ErrorFindUser     = 2 //2 不存在用户
-	ErrorPassword     = 3 //3 密码不正确
-	ErrorExpired      = 4 //4 过期
-
-)
-
 //错误处理
 var (
-	ErrorTokenExpire     = cerror.NewCerror(10002, "token过期")
-	ErrorTokenEmpty      = cerror.NewCerror(10003, "token为空")
-	ErrorUserExist       = cerror.NewCerror(10005, "用户已经存在")
-	ErrorUserNotExist    = cerror.NewCerror(10004, "用户不存在")
-	ErrorRecordExist     = cerror.NewCerror(10006, "操作不允许:记录已经存在")
-	ErrorAddCourseFailed = cerror.NewCerror(10007, "增加课程失败")
+	ErrorOK           = cerror.NewCerror(10000, "ok")
+	ErrorTokenFormat  = cerror.NewCerror(10001, "token格式错误")
+	ErrorTokenExpire  = cerror.NewCerror(10002, "token过期")
+	ErrorTokenEmpty   = cerror.NewCerror(10003, "token为空")
+	ErrorUserExist    = cerror.NewCerror(10004, "用户已经存在")
+	ErrorUserNotExist = cerror.NewCerror(10005, "用户不存在")
+	ErrorPassword     = cerror.NewCerror(10006, "密码错误")
+	ErrorLoginAgain   = cerror.NewCerror(10007, "再次登录")
 
-	ErrorAddLessonContentFind = cerror.NewCerror(10008, "增加章节内容失败：未找到章节内容信息")
+	ErrorRecordExist          = cerror.NewCerror(100016, "操作不允许:记录已经存在")
+	ErrorAddCourseFailed      = cerror.NewCerror(100017, "增加课程失败")
+	ErrorAddLessonContentFind = cerror.NewCerror(100018, "增加章节内容失败：未找到章节内容信息")
 )
 
 const (

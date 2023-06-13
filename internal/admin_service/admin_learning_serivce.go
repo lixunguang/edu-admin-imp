@@ -114,7 +114,10 @@ func GetLearningResource(ctx *gin.Context, id int) ([]admin_dto.ResourceRes, cer
 
 func AddLearningResource(ctx *gin.Context, param admin_dto.AddLearningResourceParam) (int, cerror.Cerror) {
 
-	return dao.AddLearningResource(ctx, param)
+	title, _ := dao.GetResourceTitleByID(ctx, param.ResourceID)
+	desc, _ := dao.GetResourceDescByID(ctx, param.ResourceID)
+
+	return dao.AddLearningResource(ctx, title, desc, param)
 }
 
 func DelLearningResource(ctx *gin.Context, param admin_dto.DelLearningResourceParam) (int, cerror.Cerror) {
