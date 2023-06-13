@@ -135,7 +135,7 @@ func LessonContentAdd(ctx *gin.Context, param admin_dto.LessonResourceAddParam) 
 	//查询lessonsectionid
 	lessonSectionID, err2 := dao.GetLessonSectionIDByLessonIDType(ctx, param.LessonID, common.LessonContent)
 	if lessonSectionID == 0 || err2 != nil {
-		return dto.IDRes{ID: 0}, common.ErrorAddLessonContentFind
+		return dto.IDRes{ID: 0}, cerror.ErrorAddLessonContentFind
 	}
 
 	resourceParam.SectionID = lessonSectionID

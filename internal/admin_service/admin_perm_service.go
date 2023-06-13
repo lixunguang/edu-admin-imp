@@ -12,12 +12,19 @@ import (
 //todo:并发锁 sync.map
 var AdminloginMap = map[string]string{} /*记录登录用户信息 */
 
-func IsLogin(userID string) bool {
+func IsLogin(userID string, token string) cerror.Cerror {
 	str := AdminloginMap[userID]
-	if str == "" {
-		return false
+
+	if str == "" { //未有登录记录
+		return cerror.ErrorUserNotLogin
 	}
-	return true
+
+	if str == token { //已经登录且token匹配
+		return cerror.ErrorLoginSucc
+	}
+
+	//token不匹配
+	return cerror.ErrorLoginFailed
 }
 
 //检查用户名和密码
@@ -26,19 +33,20 @@ func ValidateUserLogin(ctx *gin.Context, name string, password string) (string, 
 	err := dao.CheckAdmin(ctx, name, password)
 
 	var newTokenStr string
-	if err.Code() == common.ErrorOK.Code() { //用户名，密码正确
+	if err.Code() == cerror.ErrorLoginSucc.Code() { //用户名，密码正确
 
 		newTokenStr, _ = middleware.GenerateTokenAdmin(name)
 
 		if oldTokenStr, ok := AdminloginMap[name]; ok { //检查是否已经登录
 			//如果已经登录，则更新token
-			logger.Debugf("%s", oldTokenStr)
-			res = common.ErrorLoginAgain
+			logger.Debugf("oldTokenStr:%s", oldTokenStr)
+			res = cerror.ErrorLoginAgain
 		} else {
-			res = common.ErrorOK
+			res = cerror.ErrorLoginSucc
 		}
 
 		AdminloginMap[name] = newTokenStr
+		logger.Debugf("newTokenStr:%s", newTokenStr)
 	} else {
 		return newTokenStr, err
 	}
@@ -49,7 +57,7 @@ func ValidateUserLogin(ctx *gin.Context, name string, password string) (string, 
 func Login(ctx *gin.Context, userName string, password string) (string, cerror.Cerror) {
 
 	tokenStr, res := ValidateUserLogin(ctx, userName, password)
-	logger.Debugf("%s,%d", tokenStr, res)
+	logger.Debugf("tokenStr:%s,%d", tokenStr, res)
 
 	return tokenStr, res
 }

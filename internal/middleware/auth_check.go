@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"edu-imp/internal/common"
 	"edu-imp/pkg/cerror"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
@@ -55,11 +54,11 @@ func ParseAdminToken(tokenString string) (string, cerror.Cerror) {
 	})
 
 	if token == nil {
-		return "", common.ErrorTokenFormat
+		return "", cerror.ErrorTokenFormat
 	}
 
 	if err != nil {
-		return "", common.ErrorTokenExpire
+		return "", cerror.ErrorTokenExpire
 	}
 
 	if claims, ok := token.Claims.(*CustomClaimsAdmin); ok && token.Valid {
@@ -71,10 +70,10 @@ func ParseAdminToken(tokenString string) (string, cerror.Cerror) {
 			return claims.UserName, nil
 		}
 
-		return "", common.ErrorTokenExpire
+		return "", cerror.ErrorTokenExpire
 	} else {
 		fmt.Println(err)
 	}
 
-	return "", common.ErrorTokenExpire
+	return "", cerror.ErrorTokenExpire
 }

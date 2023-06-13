@@ -51,10 +51,10 @@ func AddUser(ctx *gin.Context, param dto.User) (dto.AddUserRes, cerror.Cerror) {
 	}
 
 	if getResult.LoginID != "" { // 重复的用户
-		return res, common.ErrorUserExist
+		return res, cerror.ErrorUserExist
 	}
 
-	return res, common.ErrorUserExist
+	return res, cerror.ErrorUserExist
 }
 
 // 删除用户
@@ -69,7 +69,7 @@ func DelUser(ctx *gin.Context, login_id string) (string, cerror.Cerror) {
 	}
 
 	if result.RowsAffected == 0 {
-		return login_id, common.ErrorUserNotExist
+		return login_id, cerror.ErrorUserNotExist
 	}
 
 	return login_id, nil
@@ -92,7 +92,7 @@ func UpdateUser(ctx *gin.Context, param dto.User) (string, cerror.Cerror) {
 	}
 
 	if result.RowsAffected == 0 {
-		return param.LoginID, common.ErrorUserNotExist
+		return param.LoginID, cerror.ErrorUserNotExist
 	}
 
 	return param.LoginID, nil

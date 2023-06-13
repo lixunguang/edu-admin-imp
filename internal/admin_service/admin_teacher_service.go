@@ -2,7 +2,6 @@ package admin_service
 
 import (
 	"edu-imp/internal/admin_dto"
-	"edu-imp/internal/common"
 	"edu-imp/internal/dao"
 	"edu-imp/internal/dto"
 	"edu-imp/pkg/cerror"
@@ -25,7 +24,7 @@ func AddTeacher(ctx *gin.Context, param admin_dto.AddTeacherParam) (dto.AdminRes
 	}
 
 	var res dto.AdminRes
-	return res, common.ErrorUserExist
+	return res, cerror.ErrorUserExist
 }
 
 func DelTeacher(ctx *gin.Context, loginID string) (string, cerror.Cerror) {

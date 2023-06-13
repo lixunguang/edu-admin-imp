@@ -45,7 +45,6 @@ func AddAdmin(ctx *gin.Context, param dto.Admin) (dto.AdminRes, cerror.Cerror) {
 }
 
 func GetAdmin(ctx *gin.Context, param dto.AdminParam) ([]Admin, cerror.Cerror) {
-
 	mysqlDB := mysql.GetDB()
 
 	var admin Admin
@@ -60,11 +59,9 @@ func GetAdmin(ctx *gin.Context, param dto.AdminParam) ([]Admin, cerror.Cerror) {
 	}
 
 	return adminArray, nil
-
 }
 
 func DelAdmin(ctx *gin.Context, param dto.AdminParam) ([]Admin, cerror.Cerror) {
-
 	mysqlDB := mysql.GetDB()
 
 	var admin Admin
@@ -97,7 +94,6 @@ func DelAdmin(ctx *gin.Context, param dto.AdminParam) ([]Admin, cerror.Cerror) {
 
 // 校验用户名及密码
 func CheckAdmin(ctx *gin.Context, name string, password string) cerror.Cerror {
-
 	db := mysql.GetDB()
 
 	// query
@@ -106,22 +102,22 @@ func CheckAdmin(ctx *gin.Context, name string, password string) cerror.Cerror {
 	result := db.Where("name = ? ", name).First(&u)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail,err=%+v, loginId=%d", result.Error, name)
-		return common.ErrorUserNotExist
+		return cerror.ErrorUserNotExist
 	}
 
 	if u.Name == "" { // 用户不存在
-		return common.ErrorUserNotExist
+		return cerror.ErrorUserNotExist
 	}
 
 	result = db.Where("name = ? and password = ?", name, password).First(&u)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v, loginId=%d", result.Error, name)
-		return common.ErrorPassword
+		return cerror.ErrorPassword
 	}
 
 	if u.Name == "" { // 密码错误
-		return common.ErrorPassword
+		return cerror.ErrorPassword
 	}
 
-	return common.ErrorOK
+	return cerror.ErrorLoginSucc
 }

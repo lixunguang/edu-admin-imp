@@ -94,7 +94,7 @@ func DelTeacher(ctx *gin.Context, loginID string) (string, cerror.Cerror) {
 	}
 
 	if result.RowsAffected == 0 {
-		return loginID, common.ErrorUserNotExist
+		return loginID, cerror.ErrorUserNotExist
 	}
 
 	return loginID, nil

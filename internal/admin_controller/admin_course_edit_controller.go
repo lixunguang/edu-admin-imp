@@ -134,7 +134,7 @@ func CourseAdd(ctx *gin.Context) {
 			util.SuccessJson(ctx, res)
 		}
 	} else {
-		util.FailJson(ctx, common.ErrorAddCourseFailed)
+		util.FailJson(ctx, cerror.ErrorAddCourseFailed)
 	}
 
 }

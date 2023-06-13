@@ -2,7 +2,6 @@ package util
 
 import (
 	"edu-imp/pkg/cerror"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -13,7 +12,6 @@ const (
 	FailCode       = -1
 	HttpStatus     = http.StatusOK
 	HeaderData     = "_header_bind_data"
-	MaxCharNum     = 255
 )
 
 type HttpResponse struct {
@@ -45,15 +43,6 @@ func NewFailHttpResponse(err cerror.Cerror) *HttpResponse {
 	}
 }
 
-func RecordNotFoundHttpResponse() *HttpResponse {
-	return &HttpResponse{
-		Code:    0,
-		Data:    nil,
-		Message: "record not found",
-	}
-
-}
-
 func NewFailMessageHttpResponse(err string) *HttpResponse {
 	return &HttpResponse{
 		Code:    FailCode,
@@ -63,17 +52,6 @@ func NewFailMessageHttpResponse(err string) *HttpResponse {
 }
 
 func SuccessJson(c *gin.Context, data interface{}) {
-	if IsDebug() {
-		str := fmt.Sprintf("<----return success: %+v", data)
-		if len(str) >= MaxCharNum {
-			str = str[:MaxCharNum]
-			str = str + " ... "
-		}
-		str = str + "---->"
-		fmt.Println(str)
-		//	logger.Infoc(c,"<----return success: %+v", data)
-	}
-
 	c.JSON(
 		HttpStatus,
 		NewSuccessHttpResponse(data),
@@ -82,25 +60,24 @@ func SuccessJson(c *gin.Context, data interface{}) {
 }
 
 func FailJson(c *gin.Context, err cerror.Cerror) {
-	if IsDebug() {
-		fmt.Println("<----return fail: ", err)
-		//	logger.Infoc(c,"<----return success: %+v", err)
-	}
-
 	c.JSON(
 		HttpStatus,
 		NewFailHttpResponse(err),
 	)
 }
 
-func RecordNotFoundJson(c *gin.Context) {
-	if IsDebug() {
-		fmt.Println("<----return Record Not Found: ")
-		//	logger.Infoc(c,"<----return success: %+v", err)
-	}
+func NewFailMessage(err cerror.Cerror, data interface{}) *HttpResponse {
 
+	return &HttpResponse{
+		Code:    err.Code(),
+		Data:    data,
+		Message: err.Error(),
+	}
+}
+
+func FailJsonData(c *gin.Context, err cerror.Cerror, data interface{}) {
 	c.JSON(
 		HttpStatus,
-		RecordNotFoundHttpResponse(),
+		NewFailMessage(err, data),
 	)
 }

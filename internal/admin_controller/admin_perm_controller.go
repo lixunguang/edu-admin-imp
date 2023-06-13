@@ -26,7 +26,7 @@ func CheckAdminAuth(c *gin.Context) {
 	logger.Infoc(c, "checkAuth:%p\n", token)
 
 	if token == "" {
-		util.FailJson(c, common.ErrorTokenEmpty)
+		util.FailJson(c, cerror.ErrorTokenEmpty)
 		c.Abort()
 		return
 	}
@@ -38,9 +38,9 @@ func CheckAdminAuth(c *gin.Context) {
 		return
 	}
 
-	isLogin := admin_service.IsLogin(user)
-	if !isLogin {
-		util.FailJson(c, common.ErrorUserNotLogin)
+	isLoginRes := admin_service.IsLogin(user, token)
+	if isLoginRes.Code() != cerror.ErrorLoginSucc.Code() {
+		util.FailJson(c, isLoginRes)
 		c.Abort()
 		return
 	}
@@ -68,13 +68,19 @@ func AdminLogin(ctx *gin.Context) {
 	tokenStr, res := admin_service.Login(ctx, param.Name, param.Password)
 
 	// 结果返回
-
-	if res.Code() == common.ErrorOK.Code() {
+	if res.Code() == cerror.ErrorLoginSucc.Code() {
 		var loginRes dto.LoginRes
 		loginRes.Token = tokenStr
 
 		util.SuccessJson(ctx, loginRes)
+	} else if res.Code() == cerror.ErrorLoginAgain.Code() {
+
+		var loginRes dto.LoginRes
+		loginRes.Token = tokenStr
+		util.FailJsonData(ctx, cerror.ErrorLoginAgain, loginRes)
+
 	} else {
+
 		util.FailJson(ctx, res)
 	}
 

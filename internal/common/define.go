@@ -3,7 +3,6 @@ package common
 
 import (
 	"edu-imp/config"
-	"edu-imp/pkg/cerror"
 	"fmt"
 )
 
@@ -19,21 +18,7 @@ const (
 )
 
 //错误处理
-var (
-	ErrorOK           = cerror.NewCerror(10000, "ok")
-	ErrorTokenFormat  = cerror.NewCerror(10001, "token格式错误")
-	ErrorTokenExpire  = cerror.NewCerror(10002, "token过期")
-	ErrorTokenEmpty   = cerror.NewCerror(10003, "token为空")
-	ErrorUserExist    = cerror.NewCerror(10004, "用户已经存在")
-	ErrorUserNotExist = cerror.NewCerror(10005, "用户不存在")
-	ErrorPassword     = cerror.NewCerror(10006, "密码错误")
-	ErrorLoginAgain   = cerror.NewCerror(10007, "再次登录")
-	ErrorUserNotLogin = cerror.NewCerror(10005, "用户未登录")
-
-	ErrorRecordExist          = cerror.NewCerror(100016, "操作不允许:记录已经存在")
-	ErrorAddCourseFailed      = cerror.NewCerror(100017, "增加课程失败")
-	ErrorAddLessonContentFind = cerror.NewCerror(100018, "增加章节内容失败：未找到章节内容信息")
-)
+var ()
 
 const (
 	NotExpired       = 0 //是否过期
