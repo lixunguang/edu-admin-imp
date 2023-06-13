@@ -12,12 +12,12 @@ func educationAdminRouter(e *gin.Engine) {
 
 	//权限 perm
 	g.POST("/perm/login", admin_controller.AdminLogin)
+	g.POST("/copyright", admin_controller.Copyright)
 	//if !util.IsDebug() {
-	g.Use(admin_controller.CheckAdminAuth) //middleware
+	//g.Use(admin_controller.CheckAdminAuth) //middleware
 	//}
 
 	g.POST("/perm/logout", admin_controller.AdminLogout)
-	g.POST("/copyright", admin_controller.Copyright)
 
 	// 用户 增加 删除 查找
 	g.POST("/student/add", admin_controller.AddUser) //增加学生

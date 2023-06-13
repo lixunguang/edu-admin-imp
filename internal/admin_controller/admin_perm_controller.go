@@ -40,7 +40,7 @@ func CheckAdminAuth(c *gin.Context) {
 
 	isLogin := admin_service.IsLogin(user)
 	if !isLogin {
-		util.FailJson(c, common.ErrorUserNotExist)
+		util.FailJson(c, common.ErrorUserNotLogin)
 		c.Abort()
 		return
 	}
@@ -68,12 +68,15 @@ func AdminLogin(ctx *gin.Context) {
 	tokenStr, res := admin_service.Login(ctx, param.Name, param.Password)
 
 	// 结果返回
-	fmt.Println(res)
 
-	var loginRes dto.LoginRes
-	loginRes.Token = tokenStr
+	if res.Code() == common.ErrorOK.Code() {
+		var loginRes dto.LoginRes
+		loginRes.Token = tokenStr
 
-	util.SuccessJson(ctx, loginRes)
+		util.SuccessJson(ctx, loginRes)
+	} else {
+		util.FailJson(ctx, res)
+	}
 
 }
 

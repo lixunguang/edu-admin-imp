@@ -28,6 +28,7 @@ var (
 	ErrorUserNotExist = cerror.NewCerror(10005, "用户不存在")
 	ErrorPassword     = cerror.NewCerror(10006, "密码错误")
 	ErrorLoginAgain   = cerror.NewCerror(10007, "再次登录")
+	ErrorUserNotLogin = cerror.NewCerror(10005, "用户未登录")
 
 	ErrorRecordExist          = cerror.NewCerror(100016, "操作不允许:记录已经存在")
 	ErrorAddCourseFailed      = cerror.NewCerror(100017, "增加课程失败")
