@@ -24,7 +24,10 @@ var (
 	ErrorUserNotExist = NewCerror(10022, "用户不存在")
 	ErrorPassword     = NewCerror(10023, "密码错误")
 
-	ErrorDataOperator = NewCerror(10030, "数据库操作失败")
+	ErrorDataAdd    = NewCerror(10030, "数据库add操作失败")
+	ErrorDataDel    = NewCerror(10031, "数据库del操作失败")
+	ErrorDataUpdate = NewCerror(10032, "数据库update操作失败")
+	ErrorDataGet    = NewCerror(10033, "数据库get操作失败")
 
 	ErrorRecordExist          = NewCerror(100056, "操作不允许:记录已经存在")
 	ErrorAddCourseFailed      = NewCerror(100057, "增加课程失败")

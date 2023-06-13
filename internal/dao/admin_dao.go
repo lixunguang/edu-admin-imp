@@ -1,7 +1,6 @@
 package dao
 
 import (
-	"edu-imp/internal/common"
 	"edu-imp/internal/dto"
 	"edu-imp/internal/model/mysql"
 	"edu-imp/pkg/cerror"
@@ -35,7 +34,7 @@ func AddAdmin(ctx *gin.Context, param dto.Admin) (dto.AdminRes, cerror.Cerror) {
 
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
-		return res, cerror.NewCerror(common.FailedID, result.Error.Error())
+		return res, cerror.ErrorDataAdd
 	}
 
 	res.Name = admin.Name
@@ -55,7 +54,7 @@ func GetAdmin(ctx *gin.Context, param dto.AdminParam) ([]Admin, cerror.Cerror) {
 
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
-		return adminArray, cerror.NewCerror(common.FailedID, result.Error.Error())
+		return adminArray, cerror.ErrorDataGet
 	}
 
 	return adminArray, nil
@@ -71,7 +70,7 @@ func DelAdmin(ctx *gin.Context, param dto.AdminParam) ([]Admin, cerror.Cerror) {
 	result := mysqlDB.Where(&admin).Find(&adminArray)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
-		return adminArray, cerror.NewCerror(common.FailedID, result.Error.Error())
+		return adminArray, cerror.ErrorDataGet
 	}
 
 	var ids []int
@@ -85,7 +84,7 @@ func DelAdmin(ctx *gin.Context, param dto.AdminParam) ([]Admin, cerror.Cerror) {
 
 		if result.Error != nil {
 			logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
-			return adminArray, cerror.NewCerror(common.FailedID, result.Error.Error())
+			return adminArray, cerror.ErrorDataDel
 		}
 	}
 

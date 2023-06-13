@@ -129,7 +129,7 @@ func GetLearningCategoryResourcePagedData(ctx *gin.Context, pageParam dto.Learni
 	result := mysqlDB.Where("category_id=?", pageParam.CategoryID).Limit(int(ps)).Offset(int(offset)).Find(&learningList)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[newsDao.NewsALL] fail,err=%+v, CurrentPage=%d", result.Error, pageParam.CurrentPage)
-		return res, cerror.DbSelectError
+		return res, cerror.ErrorDataGet
 	}
 
 	for _, val := range learningList {
@@ -157,7 +157,7 @@ func GetLearningCategoryResourceCount(ctx *gin.Context, id int) (int64, cerror.C
 	result := mysqlDB.Where("category_id=?", id).Model(&learning).Count(&count)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[newsDao.NewsALL] fail 2,err=%+v", result.Error)
-		return 0, cerror.DbSelectError
+		return 0, cerror.ErrorDataGet
 	}
 
 	return count, nil

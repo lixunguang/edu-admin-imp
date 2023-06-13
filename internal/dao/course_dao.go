@@ -52,7 +52,7 @@ func GetCoursePagedData(ctx *gin.Context, param dto.CourseAllParam) ([]Course, c
 	result := mysqlDB.Order("updated_at desc").Limit(int(ps)).Offset(int(offset)).Find(&course)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[newsDao.NewsALL] fail,err=%+v, CurrentPage=%d", result.Error, param.CurrentPage)
-		return nil, cerror.DbSelectError
+		return nil, cerror.ErrorDataGet
 	}
 
 	return course, nil
@@ -68,7 +68,7 @@ func GetCourseCount(ctx *gin.Context) (int64, cerror.Cerror) {
 	result := mysqlDB.Model(&course).Count(&count)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[newsDao.NewsALL] fail 2,err=%+v", result.Error)
-		return 0, cerror.DbSelectError
+		return 0, cerror.ErrorDataGet
 	}
 
 	return count, nil
