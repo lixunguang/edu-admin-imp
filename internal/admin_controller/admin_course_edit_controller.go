@@ -8,7 +8,6 @@ import (
 	"edu-imp/pkg/cerror"
 	"edu-imp/pkg/logger"
 	"edu-imp/pkg/util"
-	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -43,7 +42,6 @@ func CourseDel(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验
@@ -71,7 +69,6 @@ func Course(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验
@@ -98,7 +95,6 @@ func CourseAdd(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验
@@ -150,7 +146,6 @@ func CourseLessonAdd(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验
@@ -178,7 +173,6 @@ func CourseLessonAll(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验
@@ -204,7 +198,6 @@ func CourseLessonDel(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验
@@ -232,7 +225,6 @@ func CourseUpdate(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验

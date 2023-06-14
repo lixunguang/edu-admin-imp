@@ -62,7 +62,6 @@ func AdminLogin(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	// 参数校验
@@ -89,10 +88,11 @@ func AdminLogin(ctx *gin.Context) {
 		util.SuccessJson(ctx, loginRes)
 
 	} else {
-
 		util.FailJson(ctx, res)
 	}
-
+	if util.IsDebug() {
+		logger.Infoc(ctx, "---->out param: %+v,%+v", tokenStr, res)
+	}
 }
 
 // /edu/v1/perm/logout
@@ -113,7 +113,9 @@ func AdminLogout(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, cerror.InvalidParams)
 	}
-
+	if util.IsDebug() {
+		logger.Infoc(ctx, "---->out param: %+v", res)
+	}
 }
 
 type UserFake struct {
@@ -138,8 +140,8 @@ type UserFake struct {
 	dto.UserRes
 }
 
-func GetIdByToken(tokenStr string) string { //
-	//middleware.CustomClaims{}
+func GetIdFromToken(tokenStr string) string { //
+
 	var userIDStr string
 	token, err := jwt.ParseWithClaims(tokenStr, &middleware.CustomClaimsAdmin{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte("YundaoEdu"), nil
@@ -161,7 +163,7 @@ func GetUser(ctx *gin.Context) {
 	//获取参数
 
 	tokenStr := ctx.GetHeader("Authorization")
-	loginId := GetIdByToken(tokenStr)
+	loginId := GetIdFromToken(tokenStr)
 
 	//参数校验
 

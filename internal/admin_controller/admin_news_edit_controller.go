@@ -8,7 +8,6 @@ import (
 	"edu-imp/pkg/cerror"
 	"edu-imp/pkg/logger"
 	"edu-imp/pkg/util"
-	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,7 +21,6 @@ func News(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	//参数校验
@@ -51,7 +49,6 @@ func NewsAdd(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	// 参数校验
@@ -79,7 +76,6 @@ func NewsDel(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	// 参数校验
@@ -106,7 +102,6 @@ func NewsUpdate(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 	// 参数校验

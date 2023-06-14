@@ -8,7 +8,6 @@ import (
 	"edu-imp/pkg/cerror"
 	"edu-imp/pkg/logger"
 	"edu-imp/pkg/util"
-	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,7 +21,6 @@ func AddRichtext(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 
@@ -54,7 +52,6 @@ func DelRichtext(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 
@@ -84,7 +81,6 @@ func UpdateRichtext(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 
@@ -111,7 +107,6 @@ func DelFile(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		fmt.Println("---->input param: ", param)
 		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 
