@@ -1,7 +1,7 @@
 package cerror
 
 var (
-	InvalidParams = NewCerror(100001, "参数错误")
+
 	//	NotFound                  = NewCerror(100002, "找不到")
 	//	UnauthorizedAuthNotExist  = NewCerror(100003, "鉴权失败，找不到对应的 AppKey 和 AppSecret")
 	//	UnauthorizedTokenError    = NewCerror(100004, "鉴权失败，Token 错误")
@@ -16,6 +16,7 @@ var (
 	ErrorLoginAgain   = NewCerror(10002, "登录成功：再次登录")
 	ErrorUserNotLogin = NewCerror(10003, "用户未登录")
 
+	InvalidParams    = NewCerror(100010, "参数错误")
 	ErrorTokenFormat = NewCerror(10011, "token格式错误")
 	ErrorTokenExpire = NewCerror(10012, "token过期")
 	ErrorTokenEmpty  = NewCerror(10013, "token为空")

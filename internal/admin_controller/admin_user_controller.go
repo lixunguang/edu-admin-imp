@@ -8,6 +8,7 @@ import (
 	"edu-imp/pkg/cerror"
 	"edu-imp/pkg/logger"
 	"edu-imp/pkg/util"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,6 +20,10 @@ func AddUser(ctx *gin.Context) {
 		logger.Errorc(ctx, "[%s] bind param fail,err=%+v", "method", err)
 		util.FailJson(ctx, cerror.InvalidParams)
 		return
+	}
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
 	}
 
 	if param.LoginID == "" {
@@ -48,7 +53,10 @@ func DelUser(ctx *gin.Context) {
 		util.FailJson(ctx, cerror.InvalidParams)
 		return
 	}
-
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
 	//参数校验
 
 	//调用service
@@ -63,7 +71,7 @@ func DelUser(ctx *gin.Context) {
 }
 
 func UpdateUser(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin DelUser Controller")
+	logger.Infoc(ctx, "[%s] start ...", "admin UpdateUser Controller")
 	//获取参数
 	var param dto.User
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -71,7 +79,10 @@ func UpdateUser(ctx *gin.Context) {
 		util.FailJson(ctx, cerror.InvalidParams)
 		return
 	}
-
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
 	//参数校验
 
 	//调用service
@@ -86,7 +97,7 @@ func UpdateUser(ctx *gin.Context) {
 }
 
 func AllUser(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin DelUser Controller")
+	logger.Infoc(ctx, "[%s] start ...", "admin AllUser Controller")
 	//获取参数
 
 	//参数校验
@@ -111,7 +122,10 @@ func AddAdmin(ctx *gin.Context) {
 		util.FailJson(ctx, cerror.InvalidParams)
 		return
 	}
-
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
 	//参数校验
 
 	//调用service
@@ -136,7 +150,10 @@ func DelAdmin(ctx *gin.Context) {
 		util.FailJson(ctx, cerror.InvalidParams)
 		return
 	}
-
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
 	//参数校验
 
 	//调用service
@@ -166,7 +183,10 @@ func AddTeacher(ctx *gin.Context) {
 		util.FailJson(ctx, cerror.InvalidParams)
 		return
 	}
-
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
 	//参数校验
 
 	//调用service
@@ -208,7 +228,10 @@ func DelTeacher(ctx *gin.Context) {
 		util.FailJson(ctx, cerror.InvalidParams)
 		return
 	}
-
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
 	//参数校验
 
 	//调用service
@@ -232,7 +255,10 @@ func UpdateTeacher(ctx *gin.Context) {
 		util.FailJson(ctx, cerror.InvalidParams)
 		return
 	}
-
+	if util.IsDebug() {
+		fmt.Println("---->input param: ", param)
+		logger.Infoc(ctx, "---->input param: %+v", param)
+	}
 	//参数校验
 
 	//调用service

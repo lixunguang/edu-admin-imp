@@ -14,7 +14,7 @@ func educationAdminRouter(e *gin.Engine) {
 	g.POST("/perm/login", admin_controller.AdminLogin)
 	g.POST("/copyright", admin_controller.Copyright)
 	//if !util.IsDebug() {
-	g.Use(admin_controller.CheckAdminAuth) //middleware
+	//g.Use(admin_controller.CheckAdminAuth) //middleware
 	//}
 
 	g.POST("/perm/logout", admin_controller.AdminLogout)

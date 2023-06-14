@@ -25,38 +25,6 @@ func (User) TableName() string {
 	return "user"
 }
 
-// 增加用户
-func AddUser(ctx *gin.Context, param dto.User) (dto.AddUserRes, cerror.Cerror) {
-
-	mysqlDB := mysql.GetDB()
-
-	var res dto.AddUserRes
-
-	getResult, err := GetUser(ctx, param.LoginID)
-	if err != nil { // 数据库操作失败,未查到
-		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err")
-		//return res, err
-
-		user := User{LoginID: param.LoginID, Name: param.Name, Password: param.Password, OrganizationID: param.OrganizationID}
-		result := mysqlDB.Create(&user)
-
-		if result.Error != nil {
-			logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
-			return res, cerror.NewCerror(common.FailedID, result.Error.Error())
-		}
-
-		res.ID = user.ID
-		res.Name = user.Name
-		return res, nil
-	}
-
-	if getResult.LoginID != "" { // 重复的用户
-		return res, cerror.ErrorUserExist
-	}
-
-	return res, cerror.ErrorUserExist
-}
-
 // 删除用户
 func DelUser(ctx *gin.Context, login_id string) (string, cerror.Cerror) {
 	mysqlDB := mysql.GetDB()
@@ -88,7 +56,7 @@ func UpdateUser(ctx *gin.Context, param dto.User) (string, cerror.Cerror) {
 
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
-		return "", cerror.NewCerror(common.FailedID, result.Error.Error())
+		return "", cerror.ErrorDataUpdate
 	}
 
 	if result.RowsAffected == 0 {
@@ -121,7 +89,7 @@ func GetUser(ctx *gin.Context, loginID string) (dto.UserRes, cerror.Cerror) {
 	var userRes dto.UserRes
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
-		return userRes, cerror.NewCerror(common.Failed, result.Error.Error())
+		return userRes, cerror.ErrorDataGet
 	}
 
 	userRes.Name = user.Name
@@ -129,6 +97,24 @@ func GetUser(ctx *gin.Context, loginID string) (dto.UserRes, cerror.Cerror) {
 	userRes.LoginID = user.LoginID
 
 	return userRes, nil
+}
+
+func CreateUser(ctx *gin.Context, param dto.User) (dto.AddUserRes, cerror.Cerror) {
+	mysqlDB := mysql.GetDB()
+
+	user := User{LoginID: param.LoginID, Name: param.Name, Password: param.Password, OrganizationID: param.OrganizationID}
+	result := mysqlDB.Create(&user)
+
+	var res dto.AddUserRes
+
+	if result.Error != nil {
+		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		return res, cerror.ErrorDataAdd
+	}
+
+	res.ID = user.ID
+	res.Name = user.Name
+	return res, nil
 }
 
 // 根据userid获取username

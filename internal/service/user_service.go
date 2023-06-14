@@ -7,9 +7,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddUser(ctx *gin.Context, user dto.User) (dto.AddUserRes, cerror.Cerror) {
+// 增加用户
+func AddUser(ctx *gin.Context, param dto.User) (dto.AddUserRes, cerror.Cerror) {
 
-	return dao.AddUser(ctx, user)
+	var res dto.AddUserRes
+
+	getResult, _ := dao.GetUser(ctx, param.LoginID)
+	if getResult.LoginID == "" { //未查到
+		createRes, err := dao.CreateUser(ctx, param)
+		if err == nil {
+			return dto.AddUserRes{ID: createRes.ID, Name: createRes.Name}, nil
+		}
+
+		return res, cerror.ErrorDataAdd
+	}
+
+	return res, cerror.ErrorUserExist
 
 }
 
