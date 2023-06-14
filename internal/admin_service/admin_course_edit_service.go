@@ -58,29 +58,33 @@ func CourseDel(ctx *gin.Context, id int) (int, cerror.Cerror) {
 }
 
 //根据课程id获取课程缩略图图片的url
-func getPictureUrlByCourseID(ctx *gin.Context, courseID int) (int, string) {
+func getPictureUrlByCourseID(ctx *gin.Context, courseID int) (int, string, string) {
 
 	var url string
+	var name string
 	pictureID := dao.GetPictureIDByCourseID(ctx, courseID)
 	if pictureID == common.FailedID {
 		logger.Errorc(ctx, "[%s] getPictureUrlByCourseID fail,pic can not found", "method")
+		return pictureID, "", ""
 	} else {
 		url = dao.GetResourceContentFromID(ctx, pictureID)
 		if url == "" {
 			logger.Errorc(ctx, "[%s] GetResourceContentFromID fail,url can not found", "method")
 		}
+
+		name, _ = dao.GetResourceTitleByID(ctx, pictureID)
 	}
 
-	return pictureID, url
+	return pictureID, url, name
 
 }
 
-func getVedioUrlByCourseID(ctx *gin.Context, courseID int) (int, string) {
+func getVedioUrlByCourseID(ctx *gin.Context, courseID int) (int, string, string) {
 	var vedio dto.Vedio
 	vedioID := dao.GetVedioIdByCourseID(ctx, courseID)
-	vedio.Url, vedio.Desc = dao.GetVedioInfoFromID(ctx, vedioID)
+	vedio.Url, vedio.Desc, vedio.Name = dao.GetVedioInfoFromID(ctx, vedioID)
 
-	return vedioID, vedio.Url
+	return vedioID, vedio.Url, vedio.Name
 }
 
 // 查询课程详细信息
@@ -97,9 +101,9 @@ func Course(ctx *gin.Context, id int) (admin_dto.CourseRes, cerror.Cerror) {
 	res.Title = course.Title
 	res.Desc = course.Desc
 	res.Author = getTeacherNameByCourseID(ctx, course.ID)
-	res.PictureID, res.PictureUrl = getPictureUrlByCourseID(ctx, course.ID)
+	res.PictureID, res.PictureUrl, res.PictureName = getPictureUrlByCourseID(ctx, course.ID)
 
-	res.VedioID, res.VedioUrl = getVedioUrlByCourseID(ctx, course.ID)
+	res.VedioID, res.VedioUrl, res.VedioName = getVedioUrlByCourseID(ctx, course.ID)
 
 	return res, nil
 }

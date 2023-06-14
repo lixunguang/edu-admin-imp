@@ -187,17 +187,17 @@ func GetRichtextIdByID(ctx *gin.Context, id int) (int, cerror.Cerror) {
 }
 
 //根据vedio id 获取vedio url
-func GetVedioInfoFromID(ctx *gin.Context, id int) (string, string) {
+func GetVedioInfoFromID(ctx *gin.Context, id int) (string, string, string) {
 	mysqlDB := mysql.GetDB()
 
 	resource := Resource{}
 	result := mysqlDB.Where("id = ? ", id).First(&resource)
 	if result.Error != nil {
 		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v, id=%d", result.Error, id)
-		return "", ""
+		return "", "", ""
 	}
 
 	url := common.GetCDNAddr() + resource.Content
 
-	return url, resource.Desc
+	return url, resource.Desc, resource.Title
 }

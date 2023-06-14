@@ -21,34 +21,34 @@ import (
 // 过期检查
 
 //检查token是否过期
-func CheckAdminAuth(c *gin.Context) {
+func CheckAdminAuth(ctx *gin.Context) {
 
-	token := c.GetHeader("Authorization")
-	logger.Infoc(c, "checkAuth:%p\n", token)
+	token := ctx.GetHeader("Authorization")
+	logger.Infoc(ctx, "checkAuth:%p\n", token)
 
 	if token == "" {
-		util.FailJson(c, cerror.ErrorTokenEmpty)
-		c.Abort()
+		util.FailJson(ctx, cerror.ErrorTokenEmpty)
+		ctx.Abort()
 		return
 	}
 
 	//验证是否过期
 	user, err := middleware.ParseAdminToken(token)
 	if err != nil {
-		util.FailJson(c, err)
-		c.Abort()
+		util.FailJson(ctx, err)
+		ctx.Abort()
 		return
 	}
 
 	//如果没有过期，还需要检查是不是和系统存储的当前token一致，（如用户在其他机器上又登录了，那么之前的token就失效了）
 	checkRes := admin_service.CheckCurrentToken(user, token)
 	if checkRes.Code() != cerror.ErrorUserAuthSucc.Code() {
-		util.FailJson(c, checkRes)
-		c.Abort()
+		util.FailJson(ctx, checkRes)
+		ctx.Abort()
 		return
 	}
 
-	c.Next()
+	ctx.Next()
 
 }
 

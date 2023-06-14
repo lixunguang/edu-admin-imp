@@ -45,6 +45,7 @@ type CourseItem struct {
 type Vedio struct {
 	Url  string `json:"url"`
 	Desc string `json:"desc"`
+	Name string `json:"name"`
 }
 
 // 课程概览接口返回值

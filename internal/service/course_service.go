@@ -142,7 +142,7 @@ func getLessonListByCourseID(ctx *gin.Context, courseID int) ([]dto.LessonItem, 
 func getVedioByCourseID(ctx *gin.Context, courseID int) dto.Vedio {
 	var vedio dto.Vedio
 	res := dao.GetVedioIdByCourseID(ctx, courseID)
-	vedio.Url, vedio.Desc = dao.GetVedioInfoFromID(ctx, res)
+	vedio.Url, vedio.Desc, vedio.Name = dao.GetVedioInfoFromID(ctx, res)
 
 	return vedio
 }

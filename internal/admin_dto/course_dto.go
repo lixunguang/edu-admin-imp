@@ -17,13 +17,15 @@ type CourseAllRes struct {
 }
 
 type CourseRes struct {
-	Title      string   `json:"title"`
-	Desc       string   `json:"desc"`
-	Author     []string `json:"author"`
-	PictureUrl string   `json:"picture_url"`
-	PictureID  int      `json:"picture_id"`
-	VedioUrl   string   `json:"vedio_url"`
-	VedioID    int      `json:"vedio_id"`
+	Title       string   `json:"title"`
+	Desc        string   `json:"desc"`
+	Author      []string `json:"author"`
+	PictureUrl  string   `json:"picture_url"`
+	PictureID   int      `json:"picture_id"`
+	PictureName string   `json:"picture_name"`
+	VedioUrl    string   `json:"vedio_url"`
+	VedioID     int      `json:"vedio_id"`
+	VedioName   string   `json:"vedio_name"`
 }
 
 //AddCourseParam + CourseExtraParam
