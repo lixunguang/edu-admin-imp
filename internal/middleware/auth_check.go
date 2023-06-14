@@ -45,6 +45,7 @@ func GenerateTokenAdmin(username string) (string, error) {
 	return tokenString, nil
 }
 
+//根据token
 func ParseAdminToken(tokenString string) (string, cerror.Cerror) {
 	fmt.Println("token is=", tokenString)
 
@@ -57,22 +58,28 @@ func ParseAdminToken(tokenString string) (string, cerror.Cerror) {
 		return "", cerror.ErrorTokenFormat
 	}
 
-	if err != nil {
-		return "", cerror.ErrorTokenExpire
-	}
-
-	if claims, ok := token.Claims.(*CustomClaimsAdmin); ok && token.Valid {
-		fmt.Printf("%+v", claims)
-
-		err1 := claims.VerifyExpiresAt(time.Now().Unix(), true)
-		if err1 {
+	if claims, ok := token.Claims.(*CustomClaimsAdmin); ok {
+		isExpires := claims.VerifyExpiresAt(time.Now().Unix(), true)
+		if isExpires {
 			fmt.Println("Token not expired.")
 			return claims.UserName, nil
+		} else {
+			return "", cerror.ErrorTokenExpire
 		}
-
-		return "", cerror.ErrorTokenExpire
 	} else {
-		fmt.Println(err)
+		if ve, ok := err.(*jwt.ValidationError); ok { //官方写法
+			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
+				fmt.Println("错误的token")
+				return "", cerror.ErrorTokenFormat
+			} else if ve.Errors&(jwt.ValidationErrorExpired|jwt.ValidationErrorNotValidYet) != 0 {
+				fmt.Println("token过期或未启用")
+
+				return "", cerror.ErrorTokenExpire
+			} else {
+				fmt.Println("无法处理这个token", err)
+				return "", cerror.ErrorTokenFormat
+			}
+		}
 	}
 
 	return "", cerror.ErrorTokenExpire

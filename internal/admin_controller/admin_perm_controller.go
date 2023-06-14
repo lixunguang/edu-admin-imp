@@ -38,7 +38,7 @@ func CheckAdminAuth(c *gin.Context) {
 		return
 	}
 
-	isLoginRes := admin_service.IsLogin(user, token)
+	isLoginRes := admin_service.HasLogin(user, token)
 	if isLoginRes.Code() != cerror.ErrorLoginSucc.Code() {
 		util.FailJson(c, isLoginRes)
 		c.Abort()

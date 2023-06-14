@@ -12,7 +12,8 @@ import (
 //todo:并发锁 sync.map
 var AdminloginMap = map[string]string{} /*记录登录用户信息 */
 
-func IsLogin(userID string, token string) cerror.Cerror {
+//是否已经登陆过
+func HasLogin(userID string, token string) cerror.Cerror {
 	str := AdminloginMap[userID]
 
 	if str == "" { //未有登录记录
@@ -20,7 +21,7 @@ func IsLogin(userID string, token string) cerror.Cerror {
 	}
 
 	if str == token { //已经登录且token匹配
-		return cerror.ErrorLoginSucc
+		return cerror.ErrorLoginAgain
 	}
 
 	//token不匹配
