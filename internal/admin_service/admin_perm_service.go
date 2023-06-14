@@ -19,11 +19,12 @@ func CheckCurrentToken(userID string, token string) cerror.Cerror {
 		return cerror.ErrorUserNotLogin
 	}
 
-	if str == token { //已经登录且token匹配
-		return cerror.ErrorUserAuthSucc
-	}
+	if str != token { //token已经更新
+		return cerror.ErrorTokenAuthFailed
 
-	return cerror.ErrorUserAuthFailed
+	}
+	//已经登录且token匹配
+	return cerror.ErrorUserAuthSucc
 }
 
 //检查用户名和密码

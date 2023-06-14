@@ -18,10 +18,11 @@ var (
 	ErrorUserAuthSucc   = NewCerror(10004, "用户验证通过")
 	ErrorUserAuthFailed = NewCerror(10005, "用户验证失败")
 
-	InvalidParams    = NewCerror(100010, "参数错误")
-	ErrorTokenFormat = NewCerror(10011, "token格式错误")
-	ErrorTokenExpire = NewCerror(10012, "token过期")
-	ErrorTokenEmpty  = NewCerror(10013, "token为空")
+	InvalidParams        = NewCerror(100010, "参数错误")
+	ErrorTokenFormat     = NewCerror(10011, "token格式错误")
+	ErrorTokenExpire     = NewCerror(10012, "token过期")
+	ErrorTokenEmpty      = NewCerror(10013, "token为空")
+	ErrorTokenAuthFailed = NewCerror(100015, "用户token验证失败")
 
 	ErrorUserExist    = NewCerror(10021, "用户已经存在")
 	ErrorUserNotExist = NewCerror(10022, "用户不存在")
