@@ -12,29 +12,27 @@ import (
 //todo:并发锁 sync.map
 var AdminloginMap = map[string]string{} /*记录登录用户信息 */
 
-//是否已经登陆过
-func HasLogin(userID string, token string) cerror.Cerror {
+//检查是否和当前存储的token是否一致
+func CheckCurrentToken(userID string, token string) cerror.Cerror {
 	str := AdminloginMap[userID]
-
 	if str == "" { //未有登录记录
 		return cerror.ErrorUserNotLogin
 	}
 
 	if str == token { //已经登录且token匹配
-		return cerror.ErrorLoginAgain
+		return cerror.ErrorUserAuthSucc
 	}
 
-	//token不匹配
-	return cerror.ErrorLoginFailed
+	return cerror.ErrorUserAuthFailed
 }
 
 //检查用户名和密码
-func ValidateUserLogin(ctx *gin.Context, name string, password string) (string, cerror.Cerror) {
+func UserLogin(ctx *gin.Context, name string, password string) (string, cerror.Cerror) {
 	var res cerror.Cerror
 	err := dao.CheckAdmin(ctx, name, password)
 
 	var newTokenStr string
-	if err.Code() == cerror.ErrorLoginSucc.Code() { //用户名，密码正确
+	if err.Code() == cerror.ErrorUserAuthSucc.Code() { //用户名，密码正确
 
 		newTokenStr, _ = middleware.GenerateTokenAdmin(name)
 
@@ -57,7 +55,12 @@ func ValidateUserLogin(ctx *gin.Context, name string, password string) (string, 
 
 func Login(ctx *gin.Context, userName string, password string) (string, cerror.Cerror) {
 
-	tokenStr, res := ValidateUserLogin(ctx, userName, password)
+	//检查是否已经登录过，
+
+	//如果是，则之前登录token会被失效
+	//如果否，继续登录
+
+	tokenStr, res := UserLogin(ctx, userName, password)
 	logger.Debugf("tokenStr:%s,%d", tokenStr, res)
 
 	return tokenStr, res

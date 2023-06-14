@@ -11,10 +11,12 @@ var (
 	//	ErrorPassword             = NewCerror(100008, "错误，用户名/密码错误")
 	//	ErrortTokenExpired        = NewCerror(100009, "错误，token过期")
 
-	ErrorLoginSucc    = NewCerror(10000, "登录成功") //成功登录
-	ErrorLoginFailed  = NewCerror(10001, "登录失败")
-	ErrorLoginAgain   = NewCerror(10002, "登录成功：再次登录")
-	ErrorUserNotLogin = NewCerror(10003, "用户未登录")
+	ErrorLoginSucc      = NewCerror(10000, "登录成功") //成功登录
+	ErrorLoginFailed    = NewCerror(10001, "登录失败")
+	ErrorLoginAgain     = NewCerror(10002, "登录成功：该账号已在别处登录")
+	ErrorUserNotLogin   = NewCerror(10003, "用户未登录")
+	ErrorUserAuthSucc   = NewCerror(10004, "用户验证通过")
+	ErrorUserAuthFailed = NewCerror(10005, "用户验证失败")
 
 	InvalidParams    = NewCerror(100010, "参数错误")
 	ErrorTokenFormat = NewCerror(10011, "token格式错误")

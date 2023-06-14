@@ -20,6 +20,7 @@ import (
 // 重复登录，存储新的token，之前token失效。
 // 过期检查
 
+//检查token是否过期
 func CheckAdminAuth(c *gin.Context) {
 
 	token := c.GetHeader("Authorization")
@@ -31,6 +32,7 @@ func CheckAdminAuth(c *gin.Context) {
 		return
 	}
 
+	//验证是否过期
 	user, err := middleware.ParseAdminToken(token)
 	if err != nil {
 		util.FailJson(c, err)
@@ -38,9 +40,10 @@ func CheckAdminAuth(c *gin.Context) {
 		return
 	}
 
-	isLoginRes := admin_service.HasLogin(user, token)
-	if isLoginRes.Code() != cerror.ErrorLoginSucc.Code() {
-		util.FailJson(c, isLoginRes)
+	//如果没有过期，还需要检查是不是和系统存储的当前token一致，（如用户在其他机器上又登录了，那么之前的token就失效了）
+	checkRes := admin_service.CheckCurrentToken(user, token)
+	if checkRes.Code() != cerror.ErrorUserAuthSucc.Code() {
+		util.FailJson(c, checkRes)
 		c.Abort()
 		return
 	}
@@ -74,10 +77,16 @@ func AdminLogin(ctx *gin.Context) {
 
 		util.SuccessJson(ctx, loginRes)
 	} else if res.Code() == cerror.ErrorLoginAgain.Code() {
-
 		var loginRes dto.LoginRes
 		loginRes.Token = tokenStr
+
 		util.FailJsonData(ctx, cerror.ErrorLoginAgain, loginRes)
+
+	} else if res.Code() == cerror.ErrorUserAuthSucc.Code() {
+		var loginRes dto.LoginRes
+		loginRes.Token = tokenStr
+
+		util.SuccessJson(ctx, loginRes)
 
 	} else {
 

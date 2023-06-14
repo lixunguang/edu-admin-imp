@@ -118,5 +118,5 @@ func CheckAdmin(ctx *gin.Context, name string, password string) cerror.Cerror {
 		return cerror.ErrorPassword
 	}
 
-	return cerror.ErrorLoginSucc
+	return cerror.ErrorUserAuthSucc
 }
