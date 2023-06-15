@@ -100,7 +100,9 @@ func AdminLogout(ctx *gin.Context) {
 
 	//获取参数
 	tokenStr := ctx.GetHeader("Authorization")
-
+	if tokenStr == "" {
+		util.FailJson(ctx, cerror.ErrorTokenEmpty)
+	}
 	//参数校验
 
 	//调用service

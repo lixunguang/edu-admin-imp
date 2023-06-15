@@ -29,7 +29,7 @@ func GenerateTokenAdmin(username string) (string, error) {
 	claims := CustomClaimsAdmin{
 		username,
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Minute * 60).Unix(),
+			ExpiresAt: time.Now().Add(time.Minute * 7 * 60).Unix(),
 			Issuer:    fmt.Sprintf("%d", time.Now().Unix()),
 		},
 	}
