@@ -12,7 +12,7 @@ import (
 )
 
 func AddRichtext(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAdd Controller")
+	logger.Infoc(ctx, "[%s] start***", "ResourceAdd Controller")
 	//获取参数
 	var param admin_dto.ResourceParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -21,7 +21,7 @@ func AddRichtext(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "AddRichtext Controller", param)
 	}
 
 	var param2 dto.Resource
@@ -38,11 +38,11 @@ func AddRichtext(ctx *gin.Context) {
 		var res = dto.IDParam{ID: id}
 		util.SuccessJson(ctx, res)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  id=%+v,err=%+v", "AddRichtext Controller", id, err)
 }
 
 func DelRichtext(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAdd Controller")
+	logger.Infoc(ctx, "[%s] start***", "DelRichtext Controller")
 
 	//获取参数
 	var param admin_dto.ResouceIDParam
@@ -52,7 +52,7 @@ func DelRichtext(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "DelRichtext Controller", param)
 	}
 
 	// 调用service
@@ -68,11 +68,11 @@ func DelRichtext(ctx *gin.Context) {
 		var res = dto.IDParam{ID: id}
 		util.SuccessJson(ctx, res)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  id=%+v,err=%+v", "DelRichtext Controller", id, err)
 }
 
 func UpdateRichtext(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAdd Controller")
+	logger.Infoc(ctx, "[%s] start***", "UpdateRichtext Controller")
 	//获取参数
 	var param dto.UpdateResourceParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -81,7 +81,7 @@ func UpdateRichtext(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "UpdateRichtext Controller", param)
 	}
 
 	param.Type = common.RichType
@@ -94,11 +94,11 @@ func UpdateRichtext(ctx *gin.Context) {
 		var res = dto.IDParam{ID: id}
 		util.SuccessJson(ctx, res)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  id=%+v,err=%+v", "UpdateRichtext Controller", id, err)
 }
 
 func DelFile(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin ResourceAdd Controller")
+	logger.Infoc(ctx, "[%s] start***", "DelFile Controller")
 	//获取参数
 	var param admin_dto.ResouceIDParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -107,7 +107,7 @@ func DelFile(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "DelFile Controller", param)
 	}
 
 	// 调用service
@@ -123,5 +123,5 @@ func DelFile(ctx *gin.Context) {
 		var res = dto.IDParam{ID: id}
 		util.SuccessJson(ctx, res)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  id=%+v,err=%+v", "DelFile Controller", id, err)
 }

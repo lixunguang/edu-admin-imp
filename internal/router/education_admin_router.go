@@ -35,7 +35,7 @@ func educationAdminRouter(e *gin.Engine) {
 	// 管理员 增加 删除 查找
 	g.POST("/administrator/add", admin_controller.AddAdmin)
 	g.POST("/administrator/del", admin_controller.DelAdmin)
-	g.POST("/administrator", admin_controller.GetAdmin)
+	//g.POST("/administrator", admin_controller.GetAdmin)
 
 	//新闻编辑
 	g.POST("/news", admin_controller.News)

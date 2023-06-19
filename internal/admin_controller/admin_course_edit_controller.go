@@ -13,7 +13,7 @@ import (
 
 //获取课程列表
 func CourseAll(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "Admin CourseAll Controller")
+	logger.Infoc(ctx, "[%s] start***", "CourseAll Controller")
 	//获取参数
 
 	//参数校验
@@ -29,11 +29,13 @@ func CourseAll(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "CourseAll Controller", courseAllRes, err)
 }
 
 //删除课程
 func CourseDel(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "Admin CourseDel Controller")
+	logger.Infoc(ctx, "[%s] start***", "CourseDel Controller")
 	//获取参数
 	var param admin_dto.CourseIDParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -42,7 +44,7 @@ func CourseDel(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "CourseDel Controller", param)
 	}
 	//参数校验
 
@@ -56,11 +58,13 @@ func CourseDel(ctx *gin.Context) {
 		res := dto.IDRes{ID: id}
 		util.SuccessJson(ctx, res)
 	}
+
+	logger.Infoc(ctx, "[%s] end***  result:  id=%+v,err=%+v", "CourseDel Controller", id, err)
 }
 
 // 获取课程的信息
 func Course(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "Admin Course Controller")
+	logger.Infoc(ctx, "[%s] start***", "Course Controller")
 	//获取参数
 	var param admin_dto.CourseIDParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -69,7 +73,7 @@ func Course(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "Course Controller", param)
 	}
 	//参数校验
 
@@ -82,11 +86,13 @@ func Course(ctx *gin.Context) {
 	} else {
 		util.SuccessJson(ctx, res)
 	}
+
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "Course Controller", res, err)
 }
 
 //增加一门课程
 func CourseAdd(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "Admin CourseAdd Controller")
+	logger.Infoc(ctx, "[%s] start***", "CourseAdd Controller")
 	//获取参数
 	var param admin_dto.AddCourseAllParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -95,7 +101,7 @@ func CourseAdd(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "CourseAdd Controller", param)
 	}
 	//参数校验
 
@@ -133,11 +139,12 @@ func CourseAdd(ctx *gin.Context) {
 		util.FailJson(ctx, cerror.ErrorAddCourseFailed)
 	}
 
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "CourseAdd Controller", id, err1)
 }
 
 //增加课程的章节：即增加了章节，又把章节与课程相关联
 func CourseLessonAdd(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin CourseLessonAdd Controller")
+	logger.Infoc(ctx, "[%s] start***", "CourseLessonAdd Controller")
 	//获取参数
 	var param admin_dto.AddCourseLessonParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -146,7 +153,7 @@ func CourseLessonAdd(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "CourseLessonAdd Controller", param)
 	}
 	//参数校验
 
@@ -159,12 +166,12 @@ func CourseLessonAdd(ctx *gin.Context) {
 	} else {
 		util.SuccessJson(ctx, res)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "CourseLessonAdd Controller", res, err)
 }
 
 //获取课程的所有章节
 func CourseLessonAll(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin CourseLessonAll Controller")
+	logger.Infoc(ctx, "[%s] start***", "CourseLessonAll Controller")
 	//获取参数
 	var param admin_dto.CourseIDParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -173,7 +180,7 @@ func CourseLessonAll(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "CourseLessonAll Controller", param)
 	}
 	//参数校验
 
@@ -186,10 +193,11 @@ func CourseLessonAll(ctx *gin.Context) {
 	} else {
 		util.SuccessJson(ctx, res)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "CourseLessonAll Controller", res, err)
 }
 
 func CourseLessonDel(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin CourseLessonDel Controller")
+	logger.Infoc(ctx, "[%s] start***", "CourseLessonDel Controller")
 	//获取参数
 	var param admin_dto.CourseLessonIDParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -198,7 +206,7 @@ func CourseLessonDel(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "CourseLessonDel Controller", param)
 	}
 	//参数校验
 
@@ -209,14 +217,15 @@ func CourseLessonDel(ctx *gin.Context) {
 	if err != nil {
 		util.FailJson(ctx, err)
 	} else {
-		res := dto.IDRes{ID: 0}
+		res := dto.IDRes{ID: param.LessonID}
 		util.SuccessJson(ctx, res)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  id=%+v,err=%+v", "CourseLessonDel Controller", param.LessonID, err)
 }
 
 // 更新基本信息
 func CourseUpdate(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin CourseUpdate Controller")
+	logger.Infoc(ctx, "[%s] start***", "CourseUpdate Controller")
 	//获取参数
 	var param admin_dto.UpdateCourse
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -225,7 +234,7 @@ func CourseUpdate(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "CourseUpdate Controller", param)
 	}
 	//参数校验
 
@@ -239,4 +248,5 @@ func CourseUpdate(ctx *gin.Context) {
 		var res = dto.IDParam{ID: id}
 		util.SuccessJson(ctx, res)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  id=%+v,err=%+v", "CourseUpdate Controller", id, err)
 }

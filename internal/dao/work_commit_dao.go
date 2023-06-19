@@ -29,7 +29,7 @@ func GetWorkCommitID(ctx *gin.Context, param dto.WorkCommitUserID) (int, cerror.
 	result := mysqlDB.Where("lesson_id = ? and user_id=? ", param.LessonID, param.UserID).First(&workCommit)
 
 	if result.Error != nil {
-		logger.Warnc(ctx, "[userDao.CheckUser] fail 2,err=%+v", result.Error)
+		logger.Warnc(ctx, "[dao.GetWorkCommitID] fail 2,param=%+v, err=%+v", param, result.Error)
 		if result.Error.Error() == "record not found" {
 			return id, nil
 		} else {

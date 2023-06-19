@@ -24,7 +24,7 @@ import (
 func CheckAdminAuth(ctx *gin.Context) {
 
 	token := ctx.GetHeader("Authorization")
-	logger.Infoc(ctx, "checkAuth:%p\n", token)
+	logger.Infoc(ctx, "[CheckAuth Controller] Start %s,token:%s\n", ctx.FullPath(), token)
 
 	if token == "" {
 		util.FailJson(ctx, cerror.ErrorTokenEmpty)
@@ -47,13 +47,13 @@ func CheckAdminAuth(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  check ok", "CheckAuth Controller")
 	ctx.Next()
 
 }
 
 func AdminLogin(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "adminLogin Controller")
+	logger.Infoc(ctx, "[%s] start***", "Login Controller")
 	// 获取参数
 	var param dto.AdminLoginParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -62,7 +62,7 @@ func AdminLogin(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "Login Controller", param)
 	}
 	// 参数校验
 
@@ -90,9 +90,8 @@ func AdminLogin(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, res)
 	}
-	if util.IsDebug() {
-		logger.Infoc(ctx, "---->out param: %+v,%+v", tokenStr, res)
-	}
+
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,token =%+v", "Login Controller", res, tokenStr)
 }
 
 // /edu/v1/perm/logout
@@ -118,6 +117,7 @@ func AdminLogout(ctx *gin.Context) {
 	if util.IsDebug() {
 		logger.Infoc(ctx, "---->out param: %+v", res)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v", "Logout Controller", res)
 }
 
 type UserFake struct {
@@ -161,7 +161,7 @@ func GetIdFromToken(tokenStr string) string { //
 }
 
 func GetUser(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin GetUser Controller")
+	logger.Infoc(ctx, "[%s] start***", "GetUser Controller")
 	//获取参数
 
 	tokenStr := ctx.GetHeader("Authorization")
@@ -204,7 +204,7 @@ func GetUser(ctx *gin.Context) {
 
 		util.SuccessJson(ctx, fake)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "GetUser Controller", user, err)
 }
 
 func Copyright(ctx *gin.Context) {

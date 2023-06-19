@@ -12,7 +12,7 @@ import (
 )
 
 func News(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "News Controller")
+	logger.Infoc(ctx, "[%s] start***", "News Controller")
 	//获取参数
 	var param dto.IDParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -21,7 +21,7 @@ func News(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "News Controller", param)
 	}
 	//参数校验
 
@@ -35,12 +35,12 @@ func News(ctx *gin.Context) {
 	} else {
 		util.SuccessJson(ctx, news)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  news=%+v,err=%+v", "News Controller", news, err)
 }
 
 // NewsAdd is 增加新闻.
 func NewsAdd(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "NewsAdd Controller")
+	logger.Infoc(ctx, "[%s] start***", "NewsAdd Controller")
 	// 获取参数
 	var param dto.NewsAddParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -49,7 +49,7 @@ func NewsAdd(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "NewsAdd Controller", param)
 	}
 	// 参数校验
 
@@ -62,12 +62,12 @@ func NewsAdd(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "NewsAdd Controller", res, err)
 }
 
 // NewsDelete is 刪除新闻.
 func NewsDel(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "NewsDelete Controller")
+	logger.Infoc(ctx, "[%s] start***", "NewsDelete Controller")
 	// 获取参数
 	var param dto.DelNewsParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -76,7 +76,7 @@ func NewsDel(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "NewsDel Controller", param)
 	}
 	// 参数校验
 
@@ -89,11 +89,12 @@ func NewsDel(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "NewsDel Controller", res, err)
 }
 
 // 编辑新闻
 func NewsUpdate(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "NewsUpdate Controller")
+	logger.Infoc(ctx, "[%s] start***", "NewsUpdate Controller")
 	// 获取参数
 	var param dto.NewsUpdateParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -102,7 +103,7 @@ func NewsUpdate(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "NewsUpdate Controller", param)
 	}
 	// 参数校验
 
@@ -115,25 +116,26 @@ func NewsUpdate(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "NewsUpdate Controller", res, err)
 }
 
 func NewsTitleAll(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "NewsTitleALL Controller")
+	logger.Infoc(ctx, "[%s] start***", "NewsTitleALL Controller")
 	//获取参数
 
 	//参数校验
 
 	//调用service
 
-	newsAllRes, err := admin_service.NewsTitleALL(ctx)
+	res, err := admin_service.NewsTitleALL(ctx)
 
 	//结果返回
 	if err == nil {
-		util.SuccessJson(ctx, newsAllRes)
+		util.SuccessJson(ctx, res)
 	} else {
 		util.FailJson(ctx, err)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "NewsTitleAll Controller", res, err)
 }
 
 func NewsBannerAll(ctx *gin.Context) {
@@ -143,15 +145,14 @@ func NewsBannerAll(ctx *gin.Context) {
 	// 参数校验
 
 	// 调用service
-	picNews, err := service.BannerNewsALL(ctx)
+	res, err := service.BannerNewsALL(ctx)
 
 	// 结果返回
-	//var res dto.BannerNewsLatestRes
-	//res.PicNews = picNews
 
 	if err == nil {
-		util.SuccessJson(ctx, picNews)
+		util.SuccessJson(ctx, res)
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "NewsBannerAll Controller", res, err)
 }

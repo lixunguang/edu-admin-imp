@@ -16,7 +16,7 @@ func UploadFile(ctx *gin.Context) {
 
 //上传文件，资源id
 func UploadFiles(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "UploadFiles Controller")
+	logger.Infoc(ctx, "[%s] start***", "UploadFiles Controller")
 
 	fileMap, err := service.UploadFiles(ctx)
 
@@ -25,4 +25,5 @@ func UploadFiles(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "AddUser Controller", fileMap, err)
 }

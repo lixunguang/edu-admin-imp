@@ -12,7 +12,7 @@ import (
 )
 
 func AddUser(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin AddUser Controller")
+	logger.Infoc(ctx, "[%s] start***", "AddUser Controller")
 	//获取参数
 	var param dto.User
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -21,7 +21,7 @@ func AddUser(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "AddUser Controller", param)
 	}
 
 	if param.LoginID == "" {
@@ -39,11 +39,11 @@ func AddUser(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "AddUser Controller", res, err)
 }
 
 func DelUser(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin DelUser Controller")
+	logger.Infoc(ctx, "[%s] start***", "DelUser Controller")
 	//获取参数
 	var param dto.IDParam2
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -52,7 +52,7 @@ func DelUser(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "DelUser Controller", param)
 	}
 	//参数校验
 
@@ -65,10 +65,11 @@ func DelUser(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "DelUser Controller", res, err)
 }
 
 func UpdateUser(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin UpdateUser Controller")
+	logger.Infoc(ctx, "[%s] start***", "UpdateUser Controller")
 	//获取参数
 	var param dto.User
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -77,7 +78,7 @@ func UpdateUser(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "UpdateUser Controller", param)
 	}
 	//参数校验
 
@@ -90,10 +91,11 @@ func UpdateUser(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "UpdateUser Controller", res, err)
 }
 
 func AllUser(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin AllUser Controller")
+	logger.Infoc(ctx, "[%s] start***", "AllUser Controller")
 	//获取参数
 
 	//参数校验
@@ -107,10 +109,11 @@ func AllUser(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "AllUser Controller", res, err)
 }
 
 func AddAdmin(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin AddAdmin Controller")
+	logger.Infoc(ctx, "[%s] start***", "AddAdmin Controller")
 	//获取参数
 	var param dto.Admin
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -119,7 +122,7 @@ func AddAdmin(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "AddAdmin Controller", param)
 	}
 	//参数校验
 
@@ -132,11 +135,11 @@ func AddAdmin(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
-
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "AddAdmin Controller", res, err)
 }
 
 func DelAdmin(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin DelAdmin Controller")
+	logger.Infoc(ctx, "[%s] start***", "DelAdmin Controller")
 
 	//获取参数
 	var param dto.AdminParam
@@ -146,7 +149,7 @@ func DelAdmin(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "DelAdmin Controller", param)
 	}
 	//参数校验
 
@@ -159,17 +162,12 @@ func DelAdmin(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
-}
-
-//分页获取
-func GetAdmin(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin GetAdmin Controller")
-
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "DelAdmin Controller", res, err)
 }
 
 //暂时写在这个文件
 func AddTeacher(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin AddTeacher Controller")
+	logger.Infoc(ctx, "[%s] start***", "AddTeacher Controller")
 	//获取参数
 	var param admin_dto.AddTeacherParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -178,7 +176,7 @@ func AddTeacher(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "AddTeacher Controller", param)
 	}
 	//参数校验
 
@@ -191,11 +189,12 @@ func AddTeacher(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "AddTeacher Controller", res, err)
 }
 
 //暂时写在这个文件
 func AllTeacher(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin AllTeacher Controller")
+	logger.Infoc(ctx, "[%s] start***", "AllTeacher Controller")
 	//获取参数
 
 	//参数校验
@@ -209,11 +208,12 @@ func AllTeacher(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "AllTeacher Controller", res, err)
 }
 
 //暂时写在这个文件
 func DelTeacher(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin DelTeacher Controller")
+	logger.Infoc(ctx, "[%s] start***", "DelTeacher Controller")
 	//获取参数
 	var param dto.IDParam2
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -222,7 +222,7 @@ func DelTeacher(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "DelTeacher Controller", param)
 	}
 	//参数校验
 
@@ -235,11 +235,12 @@ func DelTeacher(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "DelTeacher Controller", res, err)
 }
 
 //暂时写在这个文件
 func UpdateTeacher(ctx *gin.Context) {
-	logger.Infoc(ctx, "[%s] start ...", "admin UpdateTeacher Controller")
+	logger.Infoc(ctx, "[%s] start***", "UpdateTeacher Controller")
 	//获取参数
 	var param admin_dto.UpdateTeacherParam
 	if err := ctx.ShouldBindJSON(&param); err != nil {
@@ -248,7 +249,7 @@ func UpdateTeacher(ctx *gin.Context) {
 		return
 	}
 	if util.IsDebug() {
-		logger.Infoc(ctx, "---->input param: %+v", param)
+		logger.Infoc(ctx, "[%s] input param: %+v", "UpdateTeacher Controller", param)
 	}
 	//参数校验
 
@@ -261,4 +262,5 @@ func UpdateTeacher(ctx *gin.Context) {
 	} else {
 		util.FailJson(ctx, err)
 	}
+	logger.Infoc(ctx, "[%s] end***  result:  res=%+v,err=%+v", "UpdateTeacher Controller", res, err)
 }
