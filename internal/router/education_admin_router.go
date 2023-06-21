@@ -87,11 +87,12 @@ func educationAdminRouter(e *gin.Engine) {
 	g.POST("/lesson/experiment", admin_controller.LessonExperiment)
 	g.POST("/lesson/experiment/add", admin_controller.LessonExperimentAdd)
 	g.POST("/lesson/experiment/del", admin_controller.LessonExperimentDel)
-	// 章节编辑：作业
+
+	// 章节编辑：作业文件
 	g.POST("/lesson/work", admin_controller.LessonWork)
 	g.POST("/lesson/work/add", admin_controller.LessonWorkAdd)
 	g.POST("/lesson/work/del", admin_controller.LessonWorkDel)
-
+	// 章节编辑：作业要求
 	g.POST("/lesson/work/requirement", admin_controller.LessonWorkRequirement)
 	g.POST("/lesson/work/requirement/update", admin_controller.LessonWorkRequirementUpdate)
 

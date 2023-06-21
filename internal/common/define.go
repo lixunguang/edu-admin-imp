@@ -56,7 +56,7 @@ const (
 //作业资源类型
 const (
 	WorkRequireRichText   = 41 //作业要求：富文本格式要求
-	WorkRequireAttachment = 42 //作业要求：文件附件格式的要求
+	WorkRequireAttachment = 42 //作业要求：文件附件
 	WorkCommitAttachment  = 43 //作业提交的文件
 	WorkCommitText        = 44 //作业提交附言
 )

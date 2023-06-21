@@ -347,7 +347,7 @@ func LessonWorkAdd(ctx *gin.Context) {
 	if util.IsDebug() {
 		logger.Infoc(ctx, "[%s] input param: %+v", "LessonWorkAdd Controller", param)
 	}
-
+	param.ResourceIndex = common.WorkRequireAttachment
 	//参数校验
 	res, err := admin_service.LessonWorkAdd(ctx, param)
 

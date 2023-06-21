@@ -261,6 +261,7 @@ func LessonWorkRequirementUpdate(ctx *gin.Context, param admin_dto.LessonResourc
 		return delRes, delErr
 	}
 
+	param.ResourceIndex = common.WorkRequireRichText
 	//增加新的
 	addRes, addErr := LessonWorkAdd(ctx, param)
 	if addErr != nil {
@@ -275,7 +276,7 @@ func LessonWorkAdd(ctx *gin.Context, param admin_dto.LessonResourceAddParam) (dt
 	var resourceParam dto.LessonSectionResource
 	//在lesson_section_resource表里增加一项
 	resourceParam.ResourceID = param.ResourceID
-	resourceParam.Index = param.ResourceIndex
+	resourceParam.Index = param.ResourceIndex //common.WorkRequireRichText //param.ResourceIndex//？？？？这里实现错了，目前这里是增加requirement
 
 	//查询lessonsectionid
 	lessonSectionID, err2 := dao.GetLessonSectionIDByLessonIDType(ctx, param.LessonID, common.LessonWork)
